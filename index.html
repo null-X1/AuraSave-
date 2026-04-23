@@ -1,0 +1,533 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Preconnect للموارد الخارجية -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://cdnjs.cloudflare.com">
+    <link rel="dns-prefetch" href="https://www.tikwm.com">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    <meta name="theme-color" content="#8A2BE2">
+    
+    <!-- Critical CSS - تحميل inline للسرعة -->
+    <style>
+        :root {
+            --primary: #8A2BE2;
+            --dark: #0F0F1E;
+            --text-primary: #F0F0F5;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #070710, #0F0F1E);
+            color: var(--text-primary);
+            font-family: system-ui, -apple-system, sans-serif;
+            min-height: 100vh;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+    </style>
+    
+    <title>AuraSave | تحميل فيديوهات تيك توك بدون علامة مائية مجانًا</title>
+
+    <!-- SEO Meta Tags متعددة اللغات -->
+    <meta name="description" content="AuraSave موقع مجاني لتحميل فيديوهات تيك توك بدون علامة مائية وبجودة عالية HD. يمكنك تحميل فيديو TikTok بصيغة MP4 أو الصوت MP3 بسهولة وبدون برامج.">
+    <meta name="keywords" content="تحميل فيديو تيك توك, تحميل فيديو تيك توك بدون علامة مائية, تحميل تيك توك mp4, تحميل صوت تيك توك mp3, TikTok video downloader, Download TikTok video without watermark, TikTok MP4 downloader, TikTok MP3 downloader">
+    
+    <!-- Open Graph Tags -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://aura-save.vercel.app/">
+    <meta property="og:title" content="AuraSave  - Download TikTok Videos">
+    <meta property="og:description" content="Free TikTok downloader without watermark">
+    <meta property="og:image" content="https://aura-save.vercel.app/og-image.jpg">
+    
+    <!-- Twitter Cards -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="AuraSave">
+    <meta name="twitter:description" content="Download TikTok videos for free">
+    <meta name="twitter:image" content="https://aura-save.vercel.app/twitter-image.jpg">
+    
+    <!-- Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AuraSave",
+      "description": "Free TikTok video downloader without watermark",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "Any",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      },
+      "aggregateRating": {
+        "@type": "AggregateRating",
+        "ratingValue": "4.8",
+        "ratingCount": "1250"
+      }
+    }
+    </script>
+    
+    <!-- لغة إضافية: الإنجليزية -->
+    <link rel="alternate" hreflang="en" href="#" />
+    <meta name="description-en" content="Kik Vid is a free TikTok video downloader without watermark. Download TikTok videos in HD quality as MP4 or extract MP3 audio easily.">
+    <meta name="keywords-en" content="TikTok video downloader, Download TikTok video without watermark, TikTok MP4 downloader, TikTok MP3 downloader, free video downloader">
+    
+    <!-- لغة إضافية: الفرنسية -->
+    <link rel="alternate" hreflang="fr" href="#" />
+    <meta name="description-fr" content="Kik Vid est un téléchargeur de vidéos TikTok gratuit sans filigrane. Téléchargez des vidéos TikTok en qualité HD au format MP4 ou extrayez l'audio MP3 facilement.">
+    <meta name="keywords-fr" content="téléchargeur vidéo TikTok, télécharger vidéo TikTok sans filigrane, téléchargeur TikTok MP4, téléchargeur TikTok MP3">
+    
+    <!-- لغة إضافية: الصينية -->
+    <link rel="alternate" hreflang="zh" href="#" />
+    <meta name="description-zh" content="Kik Vid 是免费的 TikTok 视频下载器，无水印。以高清 MP4 格式下载 TikTok 视频或轻松提取 MP3 音频。">
+    <meta name="keywords-zh" content="TikTok视频下载器, 下载无水印TikTok视频, TikTok MP4下载器, TikTok MP3下载器, 免费视频下载器">
+    
+    <!-- لغة إضافية: اليابانية -->
+    <link rel="alternate" hreflang="ja" href="#" />
+    <meta name="description-ja" content="Kik Vidは透かしなしの無料TikTok動画ダウンローダーです。高品質MP4形式でTikTok動画をダウンロード、またはMP3オーディオを簡単に抽出できます。">
+    <meta name="keywords-ja" content="TikTok動画ダウンローダー, 透かしなしTikTok動画ダウンロード, TikTok MP4ダウンローダー, TikTok MP3ダウンローダー, 無料動画ダウンローダー">
+    
+ <!-- Preload للخطوط الأساسية -->
+    <link rel="preload" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" as="style">
+    
+    <!-- Defer للخطوط -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap" media="print" onload="this.media='all'">
+    
+    <!-- Defer للأيقونات -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" media="print" onload="this.media='all'">
+
+    <!-- روابط خطوط إضافية للغات الآسيوية -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+SC:wght@400;500;700&family=Noto+Sans+JP:wght@400;500;700&display=swap" rel="stylesheet">
+  
+
+<meta name="keywords" content="
+تحميل فيديو تيك توك,
+تحميل فيديو تيك توك بدون علامة مائية,
+تحميل تيك توك mp4,
+تحميل صوت تيك توك mp3,
+TikTok video downloader,
+Download TikTok video without watermark,
+TikTok MP4 downloader,
+TikTok MP3 downloader
+">
+
+    <!-- Async للـ CSS الرئيسي -->
+    <link rel="stylesheet" href="style.css" media="print" onload="this.media='all'">
+
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7015395736052546"
+     crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <!-- زر سجل التحميلات -->
+    <div class="history-switcher">
+        <button class="history-toggle-btn" id="historyToggle">
+            <i class="fas fa-history"></i>
+        </button>
+        <div class="history-options" id="historyOptions">
+            <div class="history-header">
+                <h4><i class="fas fa-history"></i> <span data-key="historyTitle">سجل التحميلات</span></h4>
+                <button class="clear-history-btn" id="clearHistoryBtn">
+                    <i class="fas fa-trash-alt"></i>
+                </button>
+            </div>
+            <div class="history-container" id="historyContainer">
+            </div>
+            <div class="empty-history" id="emptyHistory">
+                <i class="fas fa-history"></i>
+                <p data-key="noHistory">لا توجد عمليات تحميل سابقة</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- شريط تبديل اللغة -->
+<div class="language-switcher">
+    <button class="language-toggle-btn" id="languageToggle">
+        <i class="fas fa-globe"></i>
+    </button>
+    <div class="language-options" id="languageOptions">
+        <!-- العربية -->
+        <button class="language-option" data-lang="ar">
+            <i class="fas fa-language"></i>
+            <span data-key="langArabic">العربية</span>
+        </button>
+        <!-- الإنجليزية -->
+        <button class="language-option" data-lang="en">
+            <i class="fas fa-language"></i>
+            <span data-key="langEnglish">English</span>
+        </button>
+        <!-- الفرنسية -->
+        <button class="language-option" data-lang="fr">
+            <i class="fas fa-language"></i>
+            <span data-key="langFrench">Français</span>
+        </button>
+        <!-- الصينية -->
+        <button class="language-option" data-lang="zh">
+            <i class="fas fa-language"></i>
+            <span data-key="langChinese">中文</span>
+        </button>
+        <!-- اليابانية -->
+        <button class="language-option" data-lang="ja">
+            <i class="fas fa-language"></i>
+            <span data-key="langJapanese">日本語</span>
+        </button>
+    </div>
+</div>
+    
+    <!-- نافذة تأكيد حذف السجل -->
+    <div id="deleteConfirmModal" class="modal confirm-modal">
+        <div class="modal-content confirm-content">
+            <div class="confirm-header">
+                <i class="fas fa-exclamation-triangle"></i>
+                <h3 data-key="deleteConfirmTitle">تأكيد الحذف</h3>
+            </div>
+            <div class="confirm-body">
+                <p data-key="deleteConfirmMessage">هل أنت متأكد أنك تريد حذف كل سجل التحميلات؟ هذا الإجراء لا يمكن التراجع عنه.</p>
+            </div>
+            <div class="confirm-footer">
+                <button class="confirm-btn cancel-btn" id="cancelDeleteBtn" data-key="cancel">إلغاء</button>
+                <button class="confirm-btn delete-btn" id="confirmDeleteBtn" data-key="delete">حذف الكل</button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- اسم الموقع والوصف -->
+        <div class="logo">AuraSave</div>
+        <div class="tagline" data-key="tagline">منصة التحميل المتطورة - تجربة لا تُنسى</div>
+        
+<div class="ad-container">
+  <ins class="adsbygoogle"
+       style="display:block"
+       data-ad-client="ca-pub-7015395736052546"
+       data-ad-slot="7070541816"
+       data-ad-format="auto"
+       data-full-width-responsive="true"></ins>
+</div>
+
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+
+
+    <div class="seo-container">
+        <!-- SEO باللغة العربية -->
+        <details class="seo-box" id="seo-ar" lang="ar" dir="rtl">
+            <summary>معلومات عن موقع AuraSave</summary>
+            <h2>ما هو موقع Kik Vid؟</h2>
+            <p>Kik Vid هو موقع مجاني يتيح لك تحميل فيديوهات تيك توك بدون علامة مائية وبجودة عالية مباشرة من المتصفح، بدون الحاجة إلى تثبيت أي تطبيقات أو برامج.</p>
+            
+            <h2>كيفية تحميل فيديو من تيك توك</h2>
+            <p>انسخ رابط الفيديو من تطبيق TikTok، ثم الصقه في الخانة المخصصة، واضغط على زر التحميل.</p>
+            
+            <h2>مميزات Kik Vid</h2>
+            <ul>
+                <li>تحميل مجاني بالكامل بدون رسوم</li>
+                <li>بدون علامة مائية على الفيديو</li>
+                <li>جودة عالية HD</li>
+                <li>سرعة تحميل فائقة</li>
+                <li>يدعم جميع أجهزة الجوال والكمبيوتر</li>
+                <li>لا يتطلب تسجيل دخول أو إنشاء حساب</li>
+            </ul>
+            
+            <h2>هل Kik Vid آمن؟</h2>
+            <p>نعم، Kik Vid آمن تماماً ولا نحتفظ بأي بيانات شخصية للمستخدمين. كل التحميلات تتم عبر اتصالات آمنة.</p>
+        </details>
+
+        <!-- SEO باللغة الإنجليزية -->
+        <details class="seo-box" id="seo-en" lang="en" dir="ltr" style="display: none;">
+            <summary>About Kik vid website</summary>
+            <h2>What is Kik Vid?</h2>
+            <p>Kik Vid is a free online TikTok video downloader that allows users to download TikTok videos without watermark in HD quality directly from the browser, without installing any apps or software.</p>
+            
+            <h2>How to Download TikTok Videos</h2>
+            <p>Copy the TikTok video link from the TikTok app, paste it into the input field, and click the download button.</p>
+            
+            <h2>Kik Vid Features</h2>
+            <ul>
+                <li>Completely free with no charges</li>
+                <li>No watermark on videos</li>
+                <li>High quality HD downloads</li>
+                <li>Super fast download speed</li>
+                <li>Supports all mobile and computer devices</li>
+                <li>No login or account creation required</li>
+            </ul>
+            
+            <h2>Is Kik Vid Safe?</h2>
+            <p>Yes, Kik Vid is completely safe and we don't store any personal user data. All downloads are done through secure connections.</p>
+        </details>
+
+        <!-- SEO باللغة الفرنسية -->
+        <details class="seo-box" id="seo-fr" lang="fr" dir="ltr" style="display: none;">
+            <summary>À propos du site Kik vid</summary>
+            <h2>Qu'est-ce que Kik Vid ?</h2>
+            <p>Kik Vid est un téléchargeur de vidéos TikTok en ligne gratuit qui permet aux utilisateurs de télécharger des vidéos TikTok sans filigrane en qualité HD directement depuis le navigateur, sans installer d'applications ou de logiciels.</p>
+            
+            <h2>Comment télécharger des vidéos TikTok</h2>
+            <p>Copiez le lien de la vidéo TikTok depuis l'application TikTok, collez-le dans le champ de saisie et cliquez sur le bouton de téléchargement.</p>
+            
+            <h2>Fonctionnalités de Kik Vid</h2>
+            <ul>
+                <li>Complètement gratuit sans frais</li>
+                <li>Pas de filigrane sur les vidéos</li>
+                <li>Téléchargements HD de haute qualité</li>
+                <li>Vitesse de téléchargement super rapide</li>
+                <li>Prend en charge tous les appareils mobiles et ordinateurs</li>
+                <li>Aucune connexion ou création de compte requise</li>
+            </ul>
+            
+            <h2>Kik Vid est-il sûr ?</h2>
+            <p>Oui, Kik Vid est complètement sûr et nous ne stockons aucune donnée personnelle des utilisateurs. Tous les téléchargements sont effectués via des connexions sécurisées.</p>
+        </details>
+
+        <!-- SEO باللغة الصينية -->
+        <details class="seo-box" id="seo-zh" lang="zh" dir="ltr" style="display: none;">
+            <summary>关于 Kik vid 网站</summary>
+            <h2>什么是 Kik Vid？</h2>
+            <p>Kik Vid 是一个免费的在线 TikTok 视频下载器，允许用户直接从浏览器下载无水印的 TikTok 高清视频，无需安装任何应用程序或软件。</p>
+            
+            <h2>如何下载 TikTok 视频</h2>
+            <p>从 TikTok 应用程序复制视频链接，将其粘贴到输入字段中，然后单击下载按钮。</p>
+            
+            <h2>Kik Vid 功能</h2>
+            <ul>
+                <li>完全免费，不收取任何费用</li>
+                <li>视频无水印</li>
+                <li>高质量高清下载</li>
+                <li>超快下载速度</li>
+                <li>支持所有移动设备和计算机</li>
+                <li>无需登录或创建账户</li>
+            </ul>
+            
+            <h2>Kik Vid 安全吗？</h2>
+            <p>是的，Kik Vid 完全安全，我们不存储任何用户个人数据。所有下载均通过安全连接完成。</p>
+        </details>
+
+        <!-- SEO باللغة اليابانية -->
+        <details class="seo-box" id="seo-ja" lang="ja" dir="ltr" style="display: none;">
+            <summary>Kik vid ウェブサイトについて</summary>
+            <h2>Kik Vid とは？</h2>
+            <p>Kik Vid は、透かしなしのTikTok動画をブラウザから直接高品質HDでダウンロードできる無料のオンラインTikTok動画ダウンローダーです。アプリやソフトウェアをインストールする必要はありません。</p>
+            
+            <h2>TikTok動画のダウンロード方法</h2>
+            <p>TikTokアプリから動画リンクをコピーし、入力フィールドに貼り付けて、ダウンロードボタンをクリックします。</p>
+            
+            <h2>Kik Vid の特徴</h2>
+            <ul>
+                <li>完全無料、料金なし</li>
+                <li>動画に透かしなし</li>
+                <li>高品質HDダウンロード</li>
+                <li>超高速ダウンロード速度</li>
+                <li>すべてのモバイルデバイスとコンピューターをサポート</li>
+                <li>ログインやアカウント作成は不要</li>
+            </ul>
+            
+            <h2>Kik Vid は安全ですか？</h2>
+            <p>はい、Kik Vid は完全に安全です。ユーザーの個人データは一切保存しません。すべてのダウンロードは安全な接続を通じて行われます。</p>
+        </details>
+    </div>
+
+        <div class="main-card">
+            <h1 data-key="mainTitle">حمل محتواك بلمسة واحدة</h1>
+            
+            <!-- قسم الإدخال والأزرار الرئيسية -->
+            <div class="input-section">
+                <div class="input-container">
+                    <div class="url-input-wrapper" id="urlInputWrapper">
+                        <i class="fas fa-paste paste-icon" id="pasteIcon" title="لصق الرابط من الحافظة"></i>
+                        <input type="text" class="url-input" placeholder="https://www.example.com" id="urlInput" data-key="urlPlaceholder">
+                    </div>
+                    <button class="clear-url-btn" id="clearUrlBtn" title="حذف الرابط">
+                        <i class="fas fa-times"></i>
+                    </button>
+                </div>
+
+                <!-- أزرار التحكم الرئيسية -->
+                <div class="action-buttons">
+                    <!-- زر اختيار الصيغة -->
+                    <button id="openFormatBtn" class="format-select-btn">
+                        <i class="fas fa-cog"></i> 
+                        <span class="btn-text" id="formatBtnText">اختيار نوع المحتوى</span>
+                        <span class="selected-format-badge" id="selectedFormatBadge"></span>
+                    </button>
+
+                    <!-- زر التحميل الرئيسي -->
+                    <button class="download-btn" id="downloadBtn">
+                        <div class="download-btn-content">
+                            <div class="btn-icon">
+                                <i class="fas fa-download"></i>
+                            </div>
+                            <div class="btn-text">
+                                <span class="main-text" data-key="downloadButton">تحميل المحتوى</span>
+                                <span class="sub-text" id="downloadSubText">اختر نوع المحتوى أولاً</span>
+                            </div>
+                            <div class="btn-loader" id="btnLoader">
+                                <div class="loader-spinner"></div>
+                            </div>
+                        </div>
+                        <div class="download-progress" id="downloadProgress"></div>
+                    </button>
+                </div>
+            </div>
+
+            <!-- شريط التقدم المحسن -->
+            <div class="progress-container" id="progressContainer">
+                <div class="progress-header">
+                    <span class="progress-title" id="progressTitle">جارٍ التحضير للتحميل</span>
+                    <span class="progress-percent" id="progressPercent">0%</span>
+                </div>
+                <div class="progress-bar">
+                    <div class="progress-fill" id="progressFill"></div>
+                </div>
+            </div>
+
+            <!-- رسائل الخطأ -->
+            <div class="error-container" id="errorContainer">
+                <div id="urlWarning" class="url-warning"></div>
+                <div id="formatWarning" class="format-warning">
+                    <i class="fas fa-exclamation-triangle"></i> 
+                    <span data-key="formatWarning">يرجى اختيار نوع المحتوى أولاً</span>
+                </div>
+                <div id="genericError" class="generic-error"></div>
+            </div>
+
+            <!-- النافذة المنبثقة لاختيار الصيغة -->
+            <div id="formatModal" class="modal">
+                <div class="modal-content">
+                    <h2 data-key="formatModalTitle">اختر نوع المحتوى المطلوب</h2>
+                    <div class="format-buttons">
+                        <button class="format-btn" data-format="mp4" data-key="formatMp4">
+                            <i class="fas fa-video"></i> 
+                            <span class="btn-text">MP4 (فيديو)</span>
+                            <i class="fas fa-check check-icon"></i>
+                        </button>
+                        <button class="format-btn" data-format="mp3" data-key="formatMp3">
+                            <i class="fas fa-music"></i> 
+                            <span class="btn-text">MP3 (صوت)</span>
+                            <i class="fas fa-check check-icon"></i>
+                        </button>
+                        <button class="format-btn" data-format="jpg" data-key="formatJpg">
+                            <i class="fas fa-images"></i> 
+                            <span class="btn-text">صور متعددة</span>
+                            <i class="fas fa-check check-icon"></i>
+                        </button>
+                    </div>
+                    <button id="closeModal" class="close-btn" data-key="closeModal">
+                        <i class="fas fa-times"></i> 
+                        <span class="btn-text">تم</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+
+  <!-- الميزات -->
+        <div class="features">
+            <div class="feature">
+                <i class="fas fa-bolt"></i>
+                <h3 data-key="feature1Title">سريع جداً</h3>
+                <p data-key="feature1Desc">أسرع وقت تحميل بفضل تقنيتنا المتطورة</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-shield-alt"></i>
+                <h3 data-key="feature2Title">آمن ومحمي</h3>
+                <p data-key="feature2Desc">بياناتك محمية دائماً مع تشفير متقدم</p>
+            </div>
+            <div class="feature">
+                <i class="fas fa-infinity"></i>
+                <h3 data-key="feature3Title">بدون حدود</h3>
+                <p data-key="feature3Desc">لا توجد قيود على حجم أو عدد التحميلات</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- معرض الصور المحسن للهواتف -->
+    <div id="galleryModal" class="modal gallery-modal">
+        <div class="modal-content gallery-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-images"></i> <span data-key="galleryTitle">معرض الصور</span></h2>
+                <button class="close-gallery" id="closeGallery">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="gallery-controls">
+                <div class="selection-info">
+                    <i class="fas fa-check-circle"></i>
+                    <span id="selectedCount">0</span> <span data-key="selectedImages">صورة محددة</span>
+                </div>
+                <div class="gallery-actions">
+                    <button class="btn-select-all" id="selectAllBtn">
+                        <i class="fas fa-check-double"></i>
+                        <span data-key="selectAll">تحديد الكل</span>
+                    </button>
+                    <button class="btn-deselect-all" id="deselectAllBtn">
+                        <i class="fas fa-times-circle"></i>
+                        <span data-key="deselectAll">إلغاء الكل</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- رسالة التلميح -->
+            <div class="gallery-hint" id="galleryHint">
+                <i class="fas fa-arrows-alt-h"></i>
+                <span data-key="scrollHint">اسحب لرؤية المزيد من الصور</span>
+            </div>
+
+            <div class="gallery-container" id="galleryContainer">
+                <!-- الصور تضاف هنا ديناميكياً -->
+            </div>
+
+            <div class="gallery-footer">
+                <button class="btn-secondary" id="cancelGallery">
+                    <i class="fas fa-arrow-right"></i>
+                    <span data-key="back">رجوع</span>
+                </button>
+                <button class="btn-primary" id="downloadSelected">
+                    <i class="fas fa-download"></i>
+                    <span data-key="downloadSelectedImages">تحميل الصور المحددة</span> (<span id="downloadCount">0</span>)
+                </button>
+            </div>
+        </div>
+    </div>
+
+<!-- تحميل Scripts بشكل محسّن -->
+    <script defer src="script.js"></script>
+    
+    <!-- Noscript fallback -->
+    <noscript>
+        <div style="text-align: center; padding: 50px; color: #fff;">
+            <h2>يرجى تفعيل JavaScript لاستخدام الموقع</h2>
+            <p>Please enable JavaScript to use this website</p>
+        </div>
+    </noscript>
+
+<!-- تسجيل Service Worker -->
+    <script>
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/service-worker.js')
+                    .then(reg => console.log('Service Worker registered'))
+                    .catch(err => console.log('Service Worker registration failed'));
+            });
+        }
+    </script>
+</body>
+</html>
