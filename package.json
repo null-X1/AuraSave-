@@ -1,0 +1,17 @@
+{
+  "name": "kik-vid",
+  "version": "1.0.0",
+  "description": "TikTok Video Downloader Without Watermark",
+  "main": "index.html",
+  "scripts": {
+    "dev": "vercel dev",
+    "deploy": "vercel --prod",
+    "build": "echo 'No build step required'"
+  },
+  "keywords": ["tiktok", "downloader", "video", "mp4", "mp3"],
+  "author": "Kik Vid",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
