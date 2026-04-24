@@ -15,13 +15,12 @@
 
     <link rel="canonical" href="https://aura-save.vercel.app/">
     
-    <!-- PWA iOS & Android Meta Tags (هنا الحل لفتح الموقع كتطبيق مستقل) -->
+    <!-- PWA iOS & Android Meta Tags -->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <meta name="apple-mobile-web-app-title" content="AuraSave">
     
-    <!-- روابط الأيقونات (يفضل أن تكون محلية كما سأشرح لك) -->
     <link rel="icon" href="/icon.png" type="image/png">
     <link rel="apple-touch-icon" href="/icon.png">
     
@@ -49,8 +48,6 @@
 
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'El Messiri', sans-serif; -webkit-tap-highlight-color: transparent; }
-
-        /* ... (احتفظ بباقي كود الـ CSS الموجود في نسختك السابقة كما هو تماماً بدون تغيير) ... */
         body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; background-color: #f0f8ff; color: #fff; overflow-x: hidden; transition: background-color 0.8s ease; }
         .fluid-bg-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: #000; }
         .fluid-image { position: absolute; top: -10%; left: -10%; width: 120%; height: 120%; background-size: cover; background-position: center; animation: panImage 25s infinite alternate ease-in-out; transition: opacity 1s ease-in-out; }
@@ -160,6 +157,7 @@
         .shake { animation: shake 0.4s ease; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+        
         .gallery-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .gallery-modal.show { opacity: 1; visibility: visible; }
         .gallery-content { background: rgba(255,255,255,0.15); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; width: 90%; max-width: 800px; max-height: 90vh; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.3); color: #fff; }
@@ -207,7 +205,6 @@
 </head>
 <body>
 
-    <!-- الكود الداخلي لـ HTML و JS لا يوجد به تغيير عن نسختك السابقة -->
     <div class="fluid-bg-container">
         <div class="fluid-image bg-light"></div>
         <div class="fluid-image bg-dark"></div>
@@ -572,8 +569,21 @@
             }
             document.getElementById('staticLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); }); document.getElementById('navLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
             document.getElementById('staticHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); }); document.getElementById('navHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
+            
+            // ============== تم إضافة هذا الجزء لحل مشكلة إغلاق المعرض ==============
+            document.addEventListener('click', (e) => { 
+                if (!e.target.closest('.control-wrapper') && 
+                    !e.target.closest('.floating-navbar') && 
+                    !e.target.closest('.dropdown-menu') &&
+                    !e.target.closest('.gallery-modal') // تم إضافة هذا السطر لمنع إغلاق المعرض عند الضغط عليه
+                ) { 
+                    closeAllModals(); 
+                } 
+            });
+            // =========================================================================
+
             document.querySelectorAll('.menu-item[data-lang]').forEach(item => { item.addEventListener('click', () => { updateLanguage(item.dataset.lang); if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }); });
-            document.addEventListener('click', (e) => { if (!e.target.closest('.control-wrapper') && !e.target.closest('.floating-navbar') && !e.target.closest('.dropdown-menu')) { closeAllModals(); } });
+            
             function renderHistory() {
                 historyList.innerHTML = '';
                 if (historyData.length === 0) { emptyHistory.style.display = 'block'; document.getElementById('initClearAll').style.display = 'none'; } 
