@@ -1,6 +1,11 @@
 {
   "version": 2,
-  "cleanUrls": true,
+  "functions": {
+    "api/download.js": {
+      "maxDuration": 15,
+      "memory": 1024
+    }
+  },
   "headers": [
     {
       "source": "/api/(.*)",
@@ -20,12 +25,17 @@
       ]
     },
     {
-      "source": "/(sw\\.js|manifest\\.json|sitemap\\.xml|robots\\.txt)",
+      "source": "/sw.js",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
+        },
+        {
+          "key": "Service-Worker-Allowed",
+          "value": "/"
         }
       ]
     }
   ]
+}
