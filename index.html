@@ -9,6 +9,9 @@
     <meta name="description" content="AuraSave موقع مجاني لتحميل فيديوهات تيك توك بدون علامة مائية وبجودة عالية HD. يمكنك تحميل فيديو TikTok بصيغة MP4 أو الصوت MP3 بسهولة.">
     <meta name="keywords" content="تحميل فيديو تيك توك, تحميل فيديو تيك توك بدون علامة مائية, تحميل تيك توك mp4, تحميل صوت تيك توك mp3, TikTok video downloader, Download TikTok video without watermark">
     <meta name="author" content="AuraSave">
+<meta property="og:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
+<meta name="twitter:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
+
     <link rel="canonical" href="https://aura-save.vercel.app/">
     
     <link rel="icon" href="https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png" type="image/png">
@@ -793,9 +796,10 @@
                 }, 300);
 
                 try {
-                    const encodedUrl = btoa(encodeURIComponent(url));
-                    const response = await fetch(`/api/download?data=${encodedUrl}`, { headers: { 'x-api-key': 'KIKVID_9xA!@2026' } });
-                    if (!response.ok) throw new Error('API request failed');
+    const encodedUrl = btoa(encodeURIComponent(url));
+    const response = await fetch(`/api/download?data=${encodedUrl}`); 
+
+    if (!response.ok) throw new Error('API request failed');
                     const data = await response.json();
                     if (!data.success) throw new Error('Invalid response data');
                     
