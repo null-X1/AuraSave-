@@ -1,11 +1,6 @@
 {
   "version": 2,
-  "functions": {
-    "api/download.js": {
-      "maxDuration": 15,
-      "memory": 1024
-    }
-  },
+  "cleanUrls": true,
   "headers": [
     {
       "source": "/api/(.*)",
@@ -16,7 +11,7 @@
         },
         {
           "key": "Access-Control-Allow-Methods",
-          "value": "GET, OPTIONS"
+          "value": "GET, POST, OPTIONS"
         },
         {
           "key": "Access-Control-Allow-Headers",
@@ -25,17 +20,12 @@
       ]
     },
     {
-      "source": "/sw.js",
+      "source": "/(sw\\.js|manifest\\.json|sitemap\\.xml|robots\\.txt)",
       "headers": [
         {
           "key": "Cache-Control",
           "value": "no-cache, no-store, must-revalidate"
-        },
-        {
-          "key": "Service-Worker-Allowed",
-          "value": "/"
         }
       ]
     }
   ]
-}
