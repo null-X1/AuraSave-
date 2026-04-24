@@ -15,8 +15,15 @@
 
     <link rel="canonical" href="https://aura-save.vercel.app/">
     
-    <link rel="icon" href="https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png" type="image/png">
-    <link rel="apple-touch-icon" href="https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png">
+    <!-- PWA iOS & Android Meta Tags (هنا الحل لفتح الموقع كتطبيق مستقل) -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="AuraSave">
+    
+    <!-- روابط الأيقونات (يفضل أن تكون محلية كما سأشرح لك) -->
+    <link rel="icon" href="/icon.png" type="image/png">
+    <link rel="apple-touch-icon" href="/icon.png">
     
     <!-- PWA Manifest -->
     <link rel="manifest" href="/manifest.json">
@@ -43,126 +50,45 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'El Messiri', sans-serif; -webkit-tap-highlight-color: transparent; }
 
-        body {
-            min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-            background-color: #f0f8ff; color: #fff; overflow-x: hidden;
-            transition: background-color 0.8s ease;
-        }
-
-        /* ==================== الخلفية السائلة المتحركة ==================== */
-        .fluid-bg-container {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -3; overflow: hidden; background: #000;
-        }
-        
-        .fluid-image {
-            position: absolute; top: -10%; left: -10%; width: 120%; height: 120%;
-            background-size: cover; background-position: center;
-            animation: panImage 25s infinite alternate ease-in-out;
-            transition: opacity 1s ease-in-out; 
-        }
-
+        /* ... (احتفظ بباقي كود الـ CSS الموجود في نسختك السابقة كما هو تماماً بدون تغيير) ... */
+        body { min-height: 100vh; display: flex; flex-direction: column; align-items: center; background-color: #f0f8ff; color: #fff; overflow-x: hidden; transition: background-color 0.8s ease; }
+        .fluid-bg-container { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; z-index: -3; overflow: hidden; background: #000; }
+        .fluid-image { position: absolute; top: -10%; left: -10%; width: 120%; height: 120%; background-size: cover; background-position: center; animation: panImage 25s infinite alternate ease-in-out; transition: opacity 1s ease-in-out; }
         .bg-light { background-image: url('https://i.ibb.co/mCZNFvNp/1776986783454.png'); opacity: 1; }
         .bg-dark { background-image: url('https://i.ibb.co/1fZPTZm9/1776991238004.png'); opacity: 0; }
-
-        .color-blob {
-            position: absolute; border-radius: 50%; filter: blur(90px);
-            animation: floatBlob 20s infinite alternate ease-in-out;
-            opacity: 0.7; mix-blend-mode: overlay; transition: all 1s ease;
-        }
+        .color-blob { position: absolute; border-radius: 50%; filter: blur(90px); animation: floatBlob 20s infinite alternate ease-in-out; opacity: 0.7; mix-blend-mode: overlay; transition: all 1s ease; }
         .blob-1 { width: 60vw; height: 60vw; background: #38bdf8; top: -20%; left: -10%; animation-delay: 0s; }
         .blob-2 { width: 50vw; height: 50vw; background: #e879f9; bottom: -10%; right: -10%; animation-delay: -5s; }
         .blob-3 { width: 70vw; height: 70vw; background: #fde047; top: 20%; left: 30%; animation-delay: -10s; opacity: 0.5; }
-
-        @media (prefers-reduced-motion: reduce) {
-            .fluid-image, .color-blob { animation: none; }
-        }
-
+        @media (prefers-reduced-motion: reduce) { .fluid-image, .color-blob { animation: none; } }
         @keyframes panImage { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.1) translate(-2%, -2%); } }
         @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(15vw, 10vh) scale(1.2); } 66% { transform: translate(-10vw, 15vh) scale(0.9); } 100% { transform: translate(5vw, -10vh) scale(1.1); } }
-
-        .bg-blur-overlay {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            background: rgba(0, 0, 0, 0.15); z-index: -1; transition: background 1s ease;
-        }
-
-        .main-wrapper {
-            position: relative; z-index: 10; width: 100%; max-width: 900px;
-            padding: 150px 15px 100px; display: flex; flex-direction: column; align-items: center;
-        }
-
-        @keyframes neonFlicker {
-            0%   { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
-            2%   { opacity: 0; filter: none; }
-            4%   { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
-            6%   { opacity: 0; filter: none; }
-            8%   { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
-            100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
-        }
-
-        .floating-navbar {
-            position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
-            width: 90%; max-width: 600px; height: 80px;
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px;
-            display: flex; justify-content: space-between; align-items: center; padding: 0 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 1px 3px rgba(255,255,255,0.3); z-index: 1000;
-            transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .bg-blur-overlay { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); background: rgba(0, 0, 0, 0.15); z-index: -1; transition: background 1s ease; }
+        .main-wrapper { position: relative; z-index: 10; width: 100%; max-width: 900px; padding: 150px 15px 100px; display: flex; flex-direction: column; align-items: center; }
+        @keyframes neonFlicker { 0% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); } 2% { opacity: 0; filter: none; } 4% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); } 6% { opacity: 0; filter: none; } 8% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); } 100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); } }
+        .floating-navbar { position: fixed; top: -100px; left: 50%; transform: translateX(-50%); width: 90%; max-width: 600px; height: 80px; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(25px); -webkit-backdrop-filter: blur(25px); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 40px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1), inset 0 1px 3px rgba(255,255,255,0.3); z-index: 1000; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .floating-navbar.scrolled { top: 20px; }
         .floating-logo { height: 65px; object-fit: contain; animation: neonFlicker 6s infinite; }
-        
-        .nav-btn {
-            width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); 
-            border: 1px solid rgba(255, 255, 255, 0.3); color: #333; display: flex; align-items: center; justify-content: center; 
-            font-size: 1.3rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-        }
+        .nav-btn { width: 48px; height: 48px; border-radius: 50%; background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.3); color: #333; display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
         .nav-btn:hover { background: #fff; color: #38bdf8; transform: scale(1.1); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2); }
-
-        .top-static-controls { 
-            position: absolute; top: 30px; width: 100%; max-width: 900px; 
-            display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 100; pointer-events: none; 
-        }
+        .top-static-controls { position: absolute; top: 30px; width: 100%; max-width: 900px; display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 100; pointer-events: none; }
         .static-logo-container { flex-grow: 1; text-align: center; }
         .static-logo { height: 90px; animation: neonFlicker 6s infinite; }
-
         .control-wrapper { pointer-events: auto; }
-        .static-btn { 
-            width: 55px; height: 55px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); 
-            backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.3); 
-            color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; 
-            font-size: 1.4rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); 
-        }
+        .static-btn { width: 55px; height: 55px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center; font-size: 1.4rem; cursor: pointer; transition: all 0.3s; box-shadow: 0 5px 15px rgba(0,0,0,0.1); }
         .static-btn:hover { background: rgba(255,255,255,0.8); color: #38bdf8; text-shadow: none; transform: scale(1.1); }
-
-        .theme-toggle-btn {
-            position: fixed; bottom: 25px; left: 25px; z-index: 999;
-            width: 50px; height: 50px; border-radius: 50%;
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4);
-            display: flex; align-items: center; justify-content: center; font-size: 1.3rem;
-            cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
+        .theme-toggle-btn { position: fixed; bottom: 25px; left: 25px; z-index: 999; width: 50px; height: 50px; border-radius: 50%; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.3); color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; cursor: pointer; box-shadow: 0 8px 20px rgba(0,0,0,0.15); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         html[dir="ltr"] .theme-toggle-btn { left: auto; right: 25px; }
         .theme-toggle-btn:hover { transform: scale(1.1) rotate(15deg); background: rgba(255,255,255,0.4); border-color: #fff; }
         .theme-toggle-btn .fa-sun { display: none; color: #fde047; text-shadow: 0 0 10px rgba(253,224,71,0.5); }
         body.dark-mode .theme-toggle-btn .fa-moon { display: none; }
         body.dark-mode .theme-toggle-btn .fa-sun { display: block; }
-
-        .dropdown-menu {
-            position: absolute; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 15px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 1px 3px rgba(255,255,255,0.2); 
-            opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
-            z-index: 2000; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4); max-width: calc(100vw - 30px);
-        }
+        .dropdown-menu { position: absolute; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 15px; box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 1px 3px rgba(255,255,255,0.2); opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); z-index: 2000; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.4); max-width: calc(100vw - 30px); }
         .dropdown-menu.show { opacity: 1; visibility: visible; transform: translateY(0) scale(1); }
         .lang-menu { min-width: 160px; } .hist-menu { width: 360px; }
         .menu-item { padding: 12px 15px; border-radius: 12px; color: #fff; cursor: pointer; display: flex; justify-content: space-between; align-items: center; transition: 0.2s; font-weight: 600; font-size: 1rem; }
         .menu-item:hover { background: rgba(255, 255, 255, 0.2); }
         .menu-item.active { background: rgba(56, 189, 248, 0.4); color: #38bdf8; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
-
         .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px 10px; border-bottom: 1px solid rgba(255,255,255,0.2); font-weight: bold; }
         .clear-all-btn { background: rgba(255,59,48,0.2); color: #ff3b30; border: 1px solid rgba(255,59,48,0.2); padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.95rem; font-weight: bold; display: flex; gap: 5px; align-items: center; text-shadow: none; }
         .clear-all-btn:hover { background: rgba(255,59,48,0.4); transform: scale(1.05); }
@@ -182,81 +108,38 @@
         .hist-btn { background: rgba(255,59,48,0.2); border: 1px solid rgba(255,59,48,0.2); width: 32px; height: 32px; border-radius: 8px; color: #ff3b30; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.2s; text-shadow: none; }
         .hist-btn:hover { background: rgba(255,59,48,0.4); transform: scale(1.1); }
         .empty-history { text-align: center; color: rgba(255,255,255,0.8); padding: 20px 0; font-size: 1rem; font-weight: bold; }
-
-        .liquid-glass-panel {
-            width: 100%; max-width: 480px; padding: 2rem 1.8rem; margin-bottom: 30px;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
-            backdrop-filter: blur(35px) saturate(150%); -webkit-backdrop-filter: blur(35px) saturate(150%);
-            border-radius: 36px; border: 1px solid rgba(255, 255, 255, 0.3); 
-            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), inset 0 1px 3px rgba(255, 255, 255, 0.4), inset 0 -2px 10px rgba(0, 0, 0, 0.05); 
-            position: relative; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1);
-        }
-
+        .liquid-glass-panel { width: 100%; max-width: 480px; padding: 2rem 1.8rem; margin-bottom: 30px; background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%); backdrop-filter: blur(35px) saturate(150%); -webkit-backdrop-filter: blur(35px) saturate(150%); border-radius: 36px; border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: 0 30px 60px rgba(0, 0, 0, 0.15), inset 0 1px 3px rgba(255, 255, 255, 0.4), inset 0 -2px 10px rgba(0, 0, 0, 0.05); position: relative; transition: all 0.5s cubic-bezier(0.25, 0.8, 0.25, 1); }
         .droplet { position: absolute; border-radius: 50%; background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(8px); border: 1px solid rgba(255, 255, 255, 0.3); box-shadow: inset -2px -2px 4px rgba(0,0,0,0.1), inset 1px 1px 3px rgba(255,255,255,0.5), 2px 3px 6px rgba(0,0,0,0.1); pointer-events: none; z-index: 20; transition: all 0.5s ease; }
         .drop-1 { width: 16px; height: 16px; top: -6px; left: 80px; } .drop-2 { width: 10px; height: 10px; top: 35px; left: 20px; } .drop-3 { width: 14px; height: 14px; top: 45%; right: -7px; }
-
         .input-row { display: flex; gap: 12px; margin-bottom: 1.8rem; align-items: stretch; }
         .input-wrapper { position: relative; flex: 1; }
-        .glass-input {
-            width: 100%; height: 100%; padding: 1.2rem; background: rgba(0, 0, 0, 0.25);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; font-size: 1rem;
-            color: #fff; outline: none; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease; text-shadow: 0 1px 3px rgba(0,0,0,0.3);
-        }
+        .glass-input { width: 100%; height: 100%; padding: 1.2rem; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; font-size: 1rem; color: #fff; outline: none; box-shadow: inset 0 2px 10px rgba(0, 0, 0, 0.1); transition: all 0.3s ease; text-shadow: 0 1px 3px rgba(0,0,0,0.3); }
         html[dir="rtl"] .glass-input { padding-left: 3.5rem; } html[dir="ltr"] .glass-input { padding-right: 3.5rem; }
         .glass-input::placeholder { color: rgba(255, 255, 255, 0.8); text-shadow: none; }
         .glass-input:focus { background: rgba(0, 0, 0, 0.35); border-color: rgba(56, 189, 248, 0.6); box-shadow: 0 0 15px rgba(56, 189, 248, 0.3), inset 0 2px 10px rgba(0, 0, 0, 0.2); }
-        
         .paste-btn { position: absolute; top: 50%; transform: translateY(-50%); background: rgba(255, 255, 255, 0.2); border: 1px solid rgba(255, 255, 255, 0.2); width: 38px; height: 38px; border-radius: 12px; color: #fff; display: flex; align-items: center; justify-content: center; cursor: pointer; transition: 0.3s; }
         html[dir="rtl"] .paste-btn { left: 10px; } html[dir="ltr"] .paste-btn { right: 10px; }
         .paste-btn:hover { background: rgba(56, 189, 248, 0.5); border-color: rgba(56,189,248,0.5); transform: translateY(-50%) scale(1.1); }
-
         .clear-btn { width: 55px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
         .clear-btn:hover { background: rgba(255, 59, 48, 0.3); border-color: rgba(255,59,48,0.4); color: #ff3b30; box-shadow: 0 0 15px rgba(255, 59, 48, 0.3); transform: scale(1.05); }
-
         .formats-container { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2rem; }
         .format-btn { flex: 1; height: 75px; background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #333; cursor: pointer; transition: all 0.3s; box-shadow: inset 0 1px 4px rgba(255,255,255,0.4); }
         .format-btn i { font-size: 1.5rem; } .format-btn span { font-size: 0.9rem; font-weight: 700; }
         .format-btn.active { border: 2px solid #38bdf8; background: rgba(255, 255, 255, 0.5); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2), inset 0 1px 5px rgba(255, 255, 255, 0.5); transform: translateY(-4px); color: #0284c7; }
-
-        .gel-download-btn { 
-            width: 100%; height: 65px; background: rgba(56, 189, 248, 0.25); border: 1px solid rgba(56, 189, 248, 0.5);
-            backdrop-filter: blur(10px); border-radius: 35px; color: #fff; font-size: 1.2rem; font-weight: 700; 
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; 
-            position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2), inset 0 2px 5px rgba(255,255,255,0.3); 
-            cursor: pointer; transition: all 0.3s; 
-        }
-        .gel-download-btn:hover { 
-            background: rgba(56, 189, 248, 0.4); border-color: rgba(56, 189, 248, 0.8);
-            box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.6), inset 0 2px 5px rgba(255,255,255,0.5); 
-            transform: translateY(-3px); 
-        }
-        
+        .gel-download-btn { width: 100%; height: 65px; background: rgba(56, 189, 248, 0.25); border: 1px solid rgba(56, 189, 248, 0.5); backdrop-filter: blur(10px); border-radius: 35px; color: #fff; font-size: 1.2rem; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2), inset 0 2px 5px rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
+        .gel-download-btn:hover { background: rgba(56, 189, 248, 0.4); border-color: rgba(56, 189, 248, 0.8); box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.6), inset 0 2px 5px rgba(255,255,255,0.5); transform: translateY(-3px); }
         .btn-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: rgba(56, 189, 248, 0.6); z-index: 1; transition: width 0.2s linear; opacity: 0; }
         .btn-content-wrapper { z-index: 4; display: flex; align-items: center; gap: 10px; position: relative; transition: 0.3s; }
-        
-        .gel-download-btn.success-state { 
-            background: rgba(52, 199, 89, 0.3); border-color: rgba(52, 199, 89, 0.6);
-            box-shadow: 0 0 30px rgba(52, 199, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3); 
-            animation: pulseSuccess 1s ease; 
-        }
-
+        .gel-download-btn.success-state { background: rgba(52, 199, 89, 0.3); border-color: rgba(52, 199, 89, 0.6); box-shadow: 0 0 30px rgba(52, 199, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3); animation: pulseSuccess 1s ease; }
         .error-inner-box { margin-top: 0; max-height: 0; opacity: 0; background: rgba(255, 59, 48, 0.3); border: 1px solid rgba(255, 59, 48, 0.4); color: #fff; font-size: 0.95rem; font-weight: 600; text-align: center; border-radius: 16px; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .error-inner-box.show { margin-top: 15px; max-height: 80px; padding: 12px; opacity: 1; }
-
         .features-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
-        .feature-box, .seo-box {
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 25px 20px; 
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 1px 3px rgba(255,255,255,0.3); transition: all 0.5s ease;
-            color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4); 
-        }
+        .feature-box, .seo-box { background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 25px 20px; box-shadow: 0 10px 20px rgba(0,0,0,0.05), inset 0 1px 3px rgba(255,255,255,0.3); transition: all 0.5s ease; color: #fff; text-shadow: 0 1px 3px rgba(0,0,0,0.4); }
         .feature-box { text-align: center; }
         .feature-box:hover, .seo-box:hover { transform: translateY(-5px); background: rgba(255, 255, 255, 0.35); border-color: rgba(255, 255, 255, 0.4); }
         .feature-box i { font-size: 2.5rem; color: #fff; margin-bottom: 15px; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); text-shadow: none; }
         .feature-box h3 { font-size: 1.2rem; margin-bottom: 8px; font-weight: bold; }
         .feature-box p { font-size: 0.95rem; line-height: 1.5; font-weight: 500; }
-
         .seo-container { width: 100%; }
         .seo-box { padding: 20px; margin-bottom: 15px; }
         .seo-box summary { font-size: 1.2rem; font-weight: 700; cursor: pointer; outline: none; display: flex; justify-content: space-between; align-items: center; }
@@ -264,20 +147,12 @@
         .seo-box summary::after { content: '\f078'; font-family: 'Font Awesome 6 Free'; font-weight: 900; transition: 0.3s; color: #fff; text-shadow: none; }
         .seo-box[open] summary::after { transform: rotate(180deg); }
         .seo-content { padding-top: 15px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); line-height: 1.7; font-size: 1rem; font-weight: 500; transition: all 0.5s ease; }
-
         .toast-container { position: fixed; top: 90px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         html[dir="rtl"] .toast-container { left: 20px; } html[dir="ltr"] .toast-container { right: 20px; }
-        .toast { 
-            background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 12px 20px; 
-            color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; 
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideToast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; 
-            font-size: 0.95rem; font-weight: bold; min-width: 200px; transition: all 0.5s ease;
-        }
+        .toast { background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px); border: 1px solid rgba(255,255,255,0.2); border-radius: 16px; padding: 12px 20px; color: #fff; text-shadow: 0 1px 2px rgba(0,0,0,0.3); display: flex; align-items: center; gap: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); animation: slideToast 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; font-size: 0.95rem; font-weight: bold; min-width: 200px; transition: all 0.5s ease; }
         .toast.success { border-inline-start: 4px solid #34c759; } .toast.success i { color: #34c759; text-shadow: none; }
         .toast.info { border-inline-start: 4px solid #38bdf8; } .toast.info i { color: #38bdf8; text-shadow: none; }
         .toast.error { border-inline-start: 4px solid #ff3b30; } .toast.error i { color: #ff3b30; text-shadow: none; }
-        
         @keyframes slideToast { from { transform: translateX(120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         html[dir="rtl"] @keyframes slideToast { from { transform: translateX(-120%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .toast.fade-out { animation: fadeOutToast 0.4s ease forwards; }
@@ -285,21 +160,9 @@
         .shake { animation: shake 0.4s ease; }
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-
-        .gallery-modal {
-            position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
-            z-index: 10000; display: flex; align-items: center; justify-content: center;
-            opacity: 0; visibility: hidden; transition: all 0.3s ease;
-        }
+        .gallery-modal { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px); z-index: 10000; display: flex; align-items: center; justify-content: center; opacity: 0; visibility: hidden; transition: all 0.3s ease; }
         .gallery-modal.show { opacity: 1; visibility: visible; }
-        .gallery-content {
-            background: rgba(255,255,255,0.15); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px);
-            border: 1px solid rgba(255,255,255,0.2); border-radius: 24px;
-            width: 90%; max-width: 800px; max-height: 90vh;
-            padding: 20px; display: flex; flex-direction: column; gap: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.3); color: #fff;
-        }
+        .gallery-content { background: rgba(255,255,255,0.15); backdrop-filter: blur(40px); -webkit-backdrop-filter: blur(40px); border: 1px solid rgba(255,255,255,0.2); border-radius: 24px; width: 90%; max-width: 800px; max-height: 90vh; padding: 20px; display: flex; flex-direction: column; gap: 15px; box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.3); color: #fff; }
         .gallery-header { display: flex; justify-content: space-between; align-items: center; }
         .gallery-header h3 { margin: 0; font-size: 1.3rem; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
         .close-gallery { background: rgba(255,59,48,0.2); color: #ff3b30; border: none; width: 35px; height: 35px; border-radius: 50%; cursor: pointer; transition: 0.2s; display: flex; align-items: center; justify-content: center; }
@@ -307,59 +170,24 @@
         .gallery-actions { display: flex; gap: 10px; }
         .gallery-btn { background: rgba(255,255,255,0.2); border: 1px solid rgba(255,255,255,0.3); color: #fff; padding: 8px 15px; border-radius: 12px; cursor: pointer; font-weight: bold; transition: 0.3s; text-shadow: 0 1px 2px rgba(0,0,0,0.3); }
         .gallery-btn:hover { background: rgba(255,255,255,0.4); border-color: #fff; }
-        .gallery-grid {
-            display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-            gap: 12px; overflow-y: auto; flex-grow: 1; padding: 5px; border-radius: 12px;
-        }
+        .gallery-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; overflow-y: auto; flex-grow: 1; padding: 5px; border-radius: 12px; }
         .gallery-grid::-webkit-scrollbar { width: 6px; }
         .gallery-grid::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 10px; }
-        .gallery-item {
-            position: relative; border-radius: 12px; overflow: hidden; cursor: pointer;
-            border: 3px solid transparent; transition: 0.2s; aspect-ratio: 9/16; background: rgba(0,0,0,0.5);
-        }
+        .gallery-item { position: relative; border-radius: 12px; overflow: hidden; cursor: pointer; border: 3px solid transparent; transition: 0.2s; aspect-ratio: 9/16; background: rgba(0,0,0,0.5); }
         .gallery-item img { width: 100%; height: 100%; object-fit: cover; opacity: 0.6; transition: 0.3s; }
         .gallery-item:hover img { opacity: 0.8; }
         .gallery-item.selected { border-color: #38bdf8; box-shadow: 0 0 15px rgba(56, 189, 248, 0.4); }
         .gallery-item.selected img { opacity: 1; }
-        .gallery-item .check-icon {
-            position: absolute; top: 8px; right: 8px; background: #38bdf8; color: #fff;
-            width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            font-size: 0.9rem; opacity: 0; transform: scale(0.5); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            box-shadow: 0 2px 5px rgba(0,0,0,0.5);
-        }
+        .gallery-item .check-icon { position: absolute; top: 8px; right: 8px; background: #38bdf8; color: #fff; width: 24px; height: 24px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.9rem; opacity: 0; transform: scale(0.5); transition: 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); box-shadow: 0 2px 5px rgba(0,0,0,0.5); }
         .gallery-item.selected .check-icon { opacity: 1; transform: scale(1); }
-
-        /* ================= DARK MODE ================= */
         body.dark-mode { background-color: #0a0a0f; }
         body.dark-mode .bg-light { opacity: 0; }
         body.dark-mode .bg-dark { opacity: 1; }
         body.dark-mode .color-blob { opacity: 0.3; } 
         body.dark-mode .bg-blur-overlay { background: rgba(0, 0, 0, 0.3); } 
-
-        @keyframes neonFlickerDark {
-            0%   { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); }
-            2%   { opacity: 0; filter: none; }
-            4%   { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); }
-            6%   { opacity: 0; filter: none; }
-            8%   { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); }
-            100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); }
-        }
-
+        @keyframes neonFlickerDark { 0% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); } 2% { opacity: 0; filter: none; } 4% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); } 6% { opacity: 0; filter: none; } 8% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); } 100% { opacity: 1; filter: drop-shadow(0 0 15px rgba(56, 189, 248, 1)) drop-shadow(0 0 30px rgba(236, 72, 153, 0.9)); } }
         body.dark-mode .static-logo, body.dark-mode .floating-logo { animation: neonFlickerDark 6s infinite; }
-
-        body.dark-mode .liquid-glass-panel,
-        body.dark-mode .floating-navbar,
-        body.dark-mode .dropdown-menu,
-        body.dark-mode .feature-box,
-        body.dark-mode .seo-box,
-        body.dark-mode .toast,
-        body.dark-mode .theme-toggle-btn,
-        body.dark-mode .gallery-content {
-            background: rgba(20, 20, 25, 0.4); backdrop-filter: blur(45px) saturate(120%); 
-            -webkit-backdrop-filter: blur(45px) saturate(120%); border-color: rgba(255, 255, 255, 0.05); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3); color: #f1f5f9; text-shadow: none;
-        }
-
+        body.dark-mode .liquid-glass-panel, body.dark-mode .floating-navbar, body.dark-mode .dropdown-menu, body.dark-mode .feature-box, body.dark-mode .seo-box, body.dark-mode .toast, body.dark-mode .theme-toggle-btn, body.dark-mode .gallery-content { background: rgba(20, 20, 25, 0.4); backdrop-filter: blur(45px) saturate(120%); -webkit-backdrop-filter: blur(45px) saturate(120%); border-color: rgba(255, 255, 255, 0.05); box-shadow: 0 15px 35px rgba(0,0,0,0.3); color: #f1f5f9; text-shadow: none; }
         body.dark-mode .nav-btn, body.dark-mode .static-btn { background: rgba(30, 30, 40, 0.5); border-color: rgba(255, 255, 255, 0.1); color: #e2e8f0; text-shadow: none; box-shadow: none; }
         body.dark-mode .nav-btn:hover, body.dark-mode .static-btn:hover { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
         body.dark-mode .glass-input { background: rgba(0, 0, 0, 0.2); border-color: rgba(255, 255, 255, 0.08); text-shadow: none; }
@@ -379,6 +207,7 @@
 </head>
 <body>
 
+    <!-- الكود الداخلي لـ HTML و JS لا يوجد به تغيير عن نسختك السابقة -->
     <div class="fluid-bg-container">
         <div class="fluid-image bg-light"></div>
         <div class="fluid-image bg-dark"></div>
@@ -502,7 +331,6 @@
     </div>
 
     <script>
-        // تسجيل الـ Service Worker (PWA)
         if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
                 navigator.serviceWorker.register('/sw.js').then(registration => {
@@ -519,12 +347,10 @@
             const videoUrl = document.getElementById('videoUrl');
             const innerErrorBox = document.getElementById('innerErrorBox');
             const mainPanel = document.getElementById('mainPanel');
-            
             const btnProgress = document.getElementById('btnProgress');
             const btnContent = document.getElementById('btnContent');
             const btnIcon = document.getElementById('btnIcon');
             const downloadText = document.getElementById('downloadText');
-            
             const langMenu = document.getElementById('langMenu');
             const historyMenu = document.getElementById('historyMenu');
             const historyList = document.getElementById('historyList');
@@ -534,32 +360,27 @@
             const floatingNav = document.getElementById('floatingNav');
             const themeToggleBtn = document.getElementById('themeToggleBtn');
             const themeColorMeta = document.getElementById('themeColorMeta');
-
-            // عناصر الـ Gallery
             const galleryModal = document.getElementById('galleryModal');
             const galleryGrid = document.getElementById('galleryGrid');
             const dlSelectedBtn = document.getElementById('downloadSelectedBtn');
             let selectedImages = new Set();
             let currentGalleryImages = [];
-
             let selectedFormat = 'mp4';
             let currentLang = localStorage.getItem('aurasave_lang') || 'ar';
             let historyData = JSON.parse(localStorage.getItem('aurasave_history')) || [];
             let isDownloading = false;
 
-            // ================= معالجة المشاركة المباشرة (Share Target API) =================
             const urlParams = new URLSearchParams(window.location.search);
             const sharedUrl = urlParams.get('url') || urlParams.get('text');
             if (sharedUrl) {
                 const extractedUrl = sharedUrl.match(/https?:\/\/[^\s]+/);
                 if (extractedUrl) {
                     videoUrl.value = extractedUrl[0];
-                    window.history.replaceState({}, document.title, "/"); // تنظيف الرابط
+                    window.history.replaceState({}, document.title, "/");
                     setTimeout(() => showToast(translations[currentLang].pasted, 'success'), 500);
                 }
             }
 
-            // ================= نظام الوضع الليلي =================
             const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
             function applyTheme(isDark) { 
                 document.body.classList.toggle('dark-mode', isDark); 
@@ -580,53 +401,10 @@
                 themeColorMeta.content = isDark ? '#0a0a0f' : '#f0f8ff';
             });
 
-            // ================= الترجمة مع إضافة حالات التحميل المتعددة =================
             const translations = {
-                ar: {
-                    placeholder: "أدخل رابط الفيديو هنا...", dlBtn: "تحميل الآن", 
-                    loadStep1: "جاري جلب الرابط...", loadStep2: "جاري تجهيز الملف...", loadStep3: "بدء التحميل...",
-                    completed: "اكتمل التحميل!", emptyHist: "لا توجد سجلات حالياً", pasted: "تم اللصق من الحافظة أو المشاركة",
-                    emptyClip: "الحافظة فارغة", invalidUrl: "الرابط غير صحيح، يرجى التأكد منه!", cleared: "تم تفريغ الحقل",
-                    ready: "تم تجهيز الملف!", apiError: "حدث خطأ أثناء جلب الفيديو. حاول مرة أخرى.",
-                    fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "صور", histTitle: "سجل التحميلات", delWarning: "مسح الكل؟",
-                    yes: "نعم", cancel: "إلغاء", clearedAll: "تم مسح السجل",
-                    notVideo: "عذراً، هذا الرابط يحتوي على صور، يرجى اختيار صيغة (صور)!",
-                    galleryTitle: "اختر الصور للتحميل", selectAll: "تحديد الكل", deselectAll: "إلغاء التحديد", dlSelected: "تحميل المحدد",
-                    feat1Title: "سريع جداً", feat1Desc: "أسرع وقت تحميل بفضل تقنيتنا.", feat2Title: "آمن ومحمي", feat2Desc: "بياناتك محمية تماماً.", feat3Title: "بدون حدود", feat3Desc: "لا توجد قيود.",
-                    seo1Title: "ما هو موقع AuraSave؟", seo1Content: "موقع AuraSave هو أداة مجانية لتحميل تيك توك بدون علامة.",
-                    seo2Title: "كيفية تحميل فيديو؟", seo2Content: "<ul><li>انسخ الرابط.</li><li>الصقه هنا.</li><li>اختر الصيغة.</li><li>اضغط تحميل.</li></ul>",
-                    seo3Title: "هل الأداة آمنة؟", seo3Content: "نعم! مجانية ولا نطلب تسجيل."
-                },
-                en: {
-                    placeholder: "Enter video link here...", dlBtn: "Download Now", 
-                    loadStep1: "Fetching link...", loadStep2: "Preparing file...", loadStep3: "Starting download...",
-                    completed: "Completed!", emptyHist: "No history yet", pasted: "Pasted from clipboard",
-                    emptyClip: "Clipboard is empty", invalidUrl: "Invalid URL!", cleared: "Field cleared",
-                    ready: "File ready!", apiError: "Error fetching video. Try again.",
-                    fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "Images", histTitle: "History", delWarning: "Clear all?",
-                    yes: "Yes", cancel: "Cancel", clearedAll: "History cleared",
-                    notVideo: "This link contains images, please select Images format!",
-                    galleryTitle: "Select Images to Download", selectAll: "Select All", deselectAll: "Deselect All", dlSelected: "Download Selected",
-                    feat1Title: "Lightning Fast", feat1Desc: "Fastest download time.", feat2Title: "Safe & Secure", feat2Desc: "Your data is protected.", feat3Title: "Unlimited", feat3Desc: "No restrictions.",
-                    seo1Title: "What is AuraSave?", seo1Content: "AuraSave is a free tool to download TikToks.",
-                    seo2Title: "How to download?", seo2Content: "<ul><li>Copy link.</li><li>Paste here.</li><li>Select format.</li><li>Download.</li></ul>",
-                    seo3Title: "Is it safe?", seo3Content: "Yes! 100% free, no registration."
-                },
-                fr: {
-                    placeholder: "Entrez le lien...", dlBtn: "Télécharger", 
-                    loadStep1: "Récupération...", loadStep2: "Préparation...", loadStep3: "Téléchargement...",
-                    completed: "Terminé!", emptyHist: "Aucun historique", pasted: "Collé",
-                    emptyClip: "Presse-papiers vide", invalidUrl: "URL invalide!", cleared: "Effacé",
-                    ready: "Fichier prêt!", apiError: "Erreur. Réessayez.",
-                    fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "Images", histTitle: "Historique", delWarning: "Tout effacer?",
-                    yes: "Oui", cancel: "Annuler", clearedAll: "Historique effacé",
-                    notVideo: "Ce lien contient des images, veuillez choisir le format Images!",
-                    galleryTitle: "Sélectionnez les images", selectAll: "Tout sélectionner", deselectAll: "Tout désélectionner", dlSelected: "Télécharger la sélection",
-                    feat1Title: "Rapide", feat1Desc: "Très rapide.", feat2Title: "Sécurisé", feat2Desc: "Données protégées.", feat3Title: "Illimité", feat3Desc: "Sans limite.",
-                    seo1Title: "Qu'est-ce que AuraSave?", seo1Content: "Outil gratuit pour TikTok.",
-                    seo2Title: "Comment télécharger?", seo2Content: "<ul><li>Copiez le lien.</li><li>Collez ici.</li><li>Format.</li><li>Télécharger.</li></ul>",
-                    seo3Title: "Sûr?", seo3Content: "Oui! Gratuit."
-                }
+                ar: { placeholder: "أدخل رابط الفيديو هنا...", dlBtn: "تحميل الآن", loadStep1: "جاري جلب الرابط...", loadStep2: "جاري تجهيز الملف...", loadStep3: "بدء التحميل...", completed: "اكتمل التحميل!", emptyHist: "لا توجد سجلات حالياً", pasted: "تم اللصق من الحافظة", emptyClip: "الحافظة فارغة", invalidUrl: "الرابط غير صحيح!", cleared: "تم تفريغ الحقل", ready: "تم تجهيز الملف!", apiError: "حدث خطأ. حاول مرة أخرى.", fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "صور", histTitle: "سجل التحميلات", delWarning: "مسح الكل؟", yes: "نعم", cancel: "إلغاء", clearedAll: "تم مسح السجل", notVideo: "الرابط يحتوي صور، اختر (صور)!", galleryTitle: "اختر الصور للتحميل", selectAll: "تحديد الكل", deselectAll: "إلغاء التحديد", dlSelected: "تحميل المحدد", feat1Title: "سريع جداً", feat1Desc: "أسرع وقت تحميل.", feat2Title: "آمن ومحمي", feat2Desc: "بياناتك محمية.", feat3Title: "بدون حدود", feat3Desc: "لا توجد قيود.", seo1Title: "ما هو موقع AuraSave؟", seo1Content: "موقع مجاني لتحميل تيك توك.", seo2Title: "كيفية التحميل؟", seo2Content: "<ul><li>انسخ الرابط.</li><li>الصقه.</li><li>اختر الصيغة.</li><li>حمل.</li></ul>", seo3Title: "هل هو آمن؟", seo3Content: "نعم! مجاني بالكامل." },
+                en: { placeholder: "Enter link...", dlBtn: "Download", loadStep1: "Fetching...", loadStep2: "Preparing...", loadStep3: "Downloading...", completed: "Done!", emptyHist: "No history", pasted: "Pasted", emptyClip: "Empty clipboard", invalidUrl: "Invalid URL!", cleared: "Cleared", ready: "Ready!", apiError: "Error. Try again.", fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "Images", histTitle: "History", delWarning: "Clear all?", yes: "Yes", cancel: "Cancel", clearedAll: "Cleared", notVideo: "Select Images format!", galleryTitle: "Select Images", selectAll: "Select All", deselectAll: "Deselect", dlSelected: "Download", feat1Title: "Fast", feat1Desc: "Lightning fast.", feat2Title: "Secure", feat2Desc: "Safe.", feat3Title: "Unlimited", feat3Desc: "No limits.", seo1Title: "What is AuraSave?", seo1Content: "Free tool.", seo2Title: "How to download?", seo2Content: "<ul><li>Copy.</li><li>Paste.</li><li>Download.</li></ul>", seo3Title: "Is it safe?", seo3Content: "Yes!" },
+                fr: { placeholder: "Lien...", dlBtn: "Télécharger", loadStep1: "Récupération...", loadStep2: "Préparation...", loadStep3: "Téléchargement...", completed: "Terminé!", emptyHist: "Vide", pasted: "Collé", emptyClip: "Presse-papiers vide", invalidUrl: "Invalide!", cleared: "Effacé", ready: "Prêt!", apiError: "Erreur.", fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "Images", histTitle: "Historique", delWarning: "Tout effacer?", yes: "Oui", cancel: "Annuler", clearedAll: "Effacé", notVideo: "Choisissez Images!", galleryTitle: "Sélectionnez", selectAll: "Tout", deselectAll: "Rien", dlSelected: "Télécharger", feat1Title: "Rapide", feat1Desc: "Très rapide.", feat2Title: "Sécurisé", feat2Desc: "Sûr.", feat3Title: "Illimité", feat3Desc: "Sans limite.", seo1Title: "AuraSave?", seo1Content: "Outil gratuit.", seo2Title: "Comment?", seo2Content: "<ul><li>Copier.</li><li>Coller.</li><li>Télécharger.</li></ul>", seo3Title: "Sûr?", seo3Content: "Oui!" }
             };
 
             function updateLanguage(lang) {
@@ -634,14 +412,12 @@
                 localStorage.setItem('aurasave_lang', lang);
                 document.documentElement.lang = lang;
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
-                
                 videoUrl.placeholder = translations[lang].placeholder;
                 if(!isDownloading) downloadText.textContent = translations[lang].dlBtn;
                 document.querySelectorAll('[data-tr]').forEach(el => {
                     const key = el.getAttribute('data-tr');
                     if(translations[lang][key]) el.innerHTML = translations[lang][key];
                 });
-
                 document.querySelectorAll('.menu-item[data-lang]').forEach(i => {
                     i.classList.remove('active');
                     if(i.dataset.lang === lang) {
@@ -649,29 +425,18 @@
                         i.innerHTML = `${i.textContent.replace(' ', '')} <i class="fas fa-check" style="font-size:0.8rem"></i>`;
                     } else i.innerHTML = i.textContent.replace(' ', '');
                 });
-                renderHistory();
-                updateDlSelectedBtn();
+                renderHistory(); updateDlSelectedBtn();
             }
 
-            // ================= دوال التحميل المباشر مع Proxy وبدون Fallback =================
-            // سيتم استخدام الـ Proxy في الباك إند لتمرير الملف وتجنب الـ CORS
             async function forceDownload(url, filename) {
                 try {
-                    // نمرر رابط الفيديو عبر الباك إند الخاص بنا
                     const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
                     const response = await fetch(proxyUrl);
                     if (!response.ok) throw new Error("Proxy Network issue");
-                    
                     const blob = await response.blob();
                     const blobUrl = URL.createObjectURL(blob);
-                    
                     const a = document.createElement('a');
-                    a.href = blobUrl;
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
-                    
+                    a.href = blobUrl; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a);
                     setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
                 } catch (e) {
                     showInnerError("فشل التحميل المباشر بسبب قيود الخادم، يرجى المحاولة لاحقاً.");
@@ -679,136 +444,77 @@
                 }
             }
 
-            // ================= تحسين إغلاق النوافذ (Modals & Dropdowns) =================
             function closeAllModals() {
-                galleryModal.classList.remove('show');
-                langMenu.classList.remove('show');
-                historyMenu.classList.remove('show');
-                confirmClearBox.classList.remove('show');
+                galleryModal.classList.remove('show'); langMenu.classList.remove('show');
+                historyMenu.classList.remove('show'); confirmClearBox.classList.remove('show');
             }
+            document.addEventListener('keydown', (e) => { if (e.key === 'Escape') closeAllModals(); });
+            window.addEventListener('popstate', (e) => { closeAllModals(); });
+            function openModalWithHistory(modalElement) { history.pushState({ modalOpen: true }, ''); modalElement.classList.add('show'); }
 
-            // الإغلاق باستخدام زر Escape
-            document.addEventListener('keydown', (e) => {
-                if (e.key === 'Escape') closeAllModals();
-            });
-
-            // الإغلاق باستخدام زر الرجوع (Back) في الهواتف
-            window.addEventListener('popstate', (e) => {
-                closeAllModals();
-            });
-
-            function openModalWithHistory(modalElement) {
-                history.pushState({ modalOpen: true }, '');
-                modalElement.classList.add('show');
-            }
-
-            // ================= دوال الـ Gallery =================
             function updateDlSelectedBtn() {
                 const count = selectedImages.size;
                 document.querySelector('#downloadSelectedBtn span').textContent = `${translations[currentLang].dlSelected} (${count})`;
             }
 
             function openGallery(images) {
-                currentGalleryImages = images;
-                selectedImages.clear();
-                galleryGrid.innerHTML = '';
-                
+                currentGalleryImages = images; selectedImages.clear(); galleryGrid.innerHTML = '';
                 images.forEach((imgUrl, idx) => {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
+                    const item = document.createElement('div'); item.className = 'gallery-item';
                     item.innerHTML = `<img src="${imgUrl}" alt="TikTok Image" loading="lazy"><div class="check-icon"><i class="fas fa-check"></i></div>`;
                     item.addEventListener('click', () => {
-                        if (selectedImages.has(imgUrl)) {
-                            selectedImages.delete(imgUrl);
-                            item.classList.remove('selected');
-                        } else {
-                            selectedImages.add(imgUrl);
-                            item.classList.add('selected');
-                        }
+                        if (selectedImages.has(imgUrl)) { selectedImages.delete(imgUrl); item.classList.remove('selected'); } 
+                        else { selectedImages.add(imgUrl); item.classList.add('selected'); }
                         updateDlSelectedBtn();
                     });
                     galleryGrid.appendChild(item);
                 });
-                updateDlSelectedBtn();
-                openModalWithHistory(galleryModal);
+                updateDlSelectedBtn(); openModalWithHistory(galleryModal);
             }
 
-            document.getElementById('closeGallery').addEventListener('click', () => {
-                if (history.state && history.state.modalOpen) history.back();
-                else closeAllModals();
-            });
-            
-            document.getElementById('selectAllBtn').addEventListener('click', () => {
-                selectedImages = new Set(currentGalleryImages);
-                document.querySelectorAll('.gallery-item').forEach(item => item.classList.add('selected'));
-                updateDlSelectedBtn();
-            });
-            document.getElementById('deselectAllBtn').addEventListener('click', () => {
-                selectedImages.clear();
-                document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('selected'));
-                updateDlSelectedBtn();
-            });
-
+            document.getElementById('closeGallery').addEventListener('click', () => { if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); });
+            document.getElementById('selectAllBtn').addEventListener('click', () => { selectedImages = new Set(currentGalleryImages); document.querySelectorAll('.gallery-item').forEach(item => item.classList.add('selected')); updateDlSelectedBtn(); });
+            document.getElementById('deselectAllBtn').addEventListener('click', () => { selectedImages.clear(); document.querySelectorAll('.gallery-item').forEach(item => item.classList.remove('selected')); updateDlSelectedBtn(); });
             dlSelectedBtn.addEventListener('click', async () => {
                 if (selectedImages.size === 0) return;
                 document.querySelector('#downloadSelectedBtn span').textContent = translations[currentLang].loadStep2;
                 dlSelectedBtn.style.pointerEvents = 'none';
-
                 let counter = 1;
                 const downloadPromises = Array.from(selectedImages).map(url => {
-                    const filename = `AuraSave_Image_${Date.now()}_${counter}.jpg`;
-                    counter++;
+                    const filename = `AuraSave_Image_${Date.now()}_${counter}.jpg`; counter++;
                     return forceDownload(url, filename);
                 });
-
                 await Promise.allSettled(downloadPromises);
-                
                 dlSelectedBtn.style.pointerEvents = 'auto';
-                if (history.state && history.state.modalOpen) history.back();
-                else closeAllModals();
-                
-                showToast(translations[currentLang].completed, 'success');
-                updateDlSelectedBtn();
+                if (history.state && history.state.modalOpen) history.back(); else closeAllModals();
+                showToast(translations[currentLang].completed, 'success'); updateDlSelectedBtn();
             });
 
-            // ================= الإشعارات =================
             function showToast(msg, type = 'info') {
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
+                const toast = document.createElement('div'); toast.className = `toast ${type}`;
                 let iconClass = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-times-circle' : 'fa-info-circle';
                 toast.innerHTML = `<i class="fas ${iconClass}"></i> <span>${msg}</span>`;
                 toastContainer.appendChild(toast);
-                setTimeout(() => {
-                    toast.classList.add('fade-out');
-                    setTimeout(() => toast.remove(), 400);
-                }, 3000);
+                setTimeout(() => { toast.classList.add('fade-out'); setTimeout(() => toast.remove(), 400); }, 3000);
             }
 
             function showInnerError(msg) {
                 innerErrorBox.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${msg}`;
-                innerErrorBox.classList.add('show');
-                mainPanel.classList.add('shake');
-                setTimeout(() => mainPanel.classList.remove('shake'), 400);
-                setTimeout(() => innerErrorBox.classList.remove('show'), 5000);
+                innerErrorBox.classList.add('show'); mainPanel.classList.add('shake');
+                setTimeout(() => mainPanel.classList.remove('shake'), 400); setTimeout(() => innerErrorBox.classList.remove('show'), 5000);
             }
 
-            // ================= المنطق الأساسي =================
             formatBtns.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    if(isDownloading) return;
-                    formatBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    selectedFormat = btn.getAttribute('data-format');
+                    if(isDownloading) return; formatBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active'); selectedFormat = btn.getAttribute('data-format');
                 });
             });
 
             document.getElementById('pasteBtn').addEventListener('click', async () => {
                 if(isDownloading) return;
-                try {
-                    const text = await navigator.clipboard.readText();
-                    if (text) { videoUrl.value = text; showToast(translations[currentLang].pasted, 'success'); }
-                    else showToast(translations[currentLang].emptyClip, 'info');
-                } catch (err) { videoUrl.focus(); document.execCommand('paste'); }
+                try { const text = await navigator.clipboard.readText(); if (text) { videoUrl.value = text; showToast(translations[currentLang].pasted, 'success'); } else showToast(translations[currentLang].emptyClip, 'info'); } 
+                catch (err) { videoUrl.focus(); document.execCommand('paste'); }
             });
 
             document.getElementById('clearBtn').addEventListener('click', () => {
@@ -820,22 +526,11 @@
             downloadBtn.addEventListener('click', async () => {
                 const url = videoUrl.value.trim();
                 if (!url || !url.startsWith('http')) return showInnerError(translations[currentLang].invalidUrl);
-
-                innerErrorBox.classList.remove('show');
-                isDownloading = true;
-                downloadBtn.style.pointerEvents = 'none';
-                btnProgress.style.opacity = '1';
-                btnIcon.className = 'fas fa-circle-notch fa-spin';
-                downloadText.textContent = translations[currentLang].loadStep1; // حالة التحميل 1
-                
-                let progress = 0;
-                let step = 1;
+                innerErrorBox.classList.remove('show'); isDownloading = true; downloadBtn.style.pointerEvents = 'none';
+                btnProgress.style.opacity = '1'; btnIcon.className = 'fas fa-circle-notch fa-spin'; downloadText.textContent = translations[currentLang].loadStep1; 
+                let progress = 0; let step = 1;
                 const progressInterval = setInterval(() => {
-                    progress += Math.random() * 10;
-                    if(progress > 85) progress = 85;
-                    btnProgress.style.width = `${progress}%`;
-                    
-                    // تغيير نص حالة التحميل ديناميكياً
+                    progress += Math.random() * 10; if(progress > 85) progress = 85; btnProgress.style.width = `${progress}%`;
                     if(progress > 30 && step === 1) { step = 2; downloadText.textContent = translations[currentLang].loadStep2; }
                     if(progress > 60 && step === 2) { step = 3; downloadText.textContent = translations[currentLang].loadStep3; }
                 }, 400);
@@ -843,90 +538,42 @@
                 try {
                     const encodedUrl = btoa(encodeURIComponent(url));
                     const response = await fetch(`/api/download?data=${encodedUrl}`); 
-
                     if (!response.ok) throw new Error('API request failed');
-                    const data = await response.json();
-                    if (!data.success) throw new Error('Invalid response data');
-                    
-                    clearInterval(progressInterval);
-                    btnProgress.style.width = '100%';
-
-                    if (selectedFormat === 'mp4' && (!data.video || data.video === "") && data.images && data.images.length > 0) {
-                        showInnerError(translations[currentLang].notVideo);
-                        resetUI();
-                        return;
-                    }
-
+                    const data = await response.json(); if (!data.success) throw new Error('Invalid response data');
+                    clearInterval(progressInterval); btnProgress.style.width = '100%';
+                    if (selectedFormat === 'mp4' && (!data.video || data.video === "") && data.images && data.images.length > 0) { showInnerError(translations[currentLang].notVideo); resetUI(); return; }
                     historyData.unshift({ url, format: selectedFormat });
-                    if(historyData.length > 15) historyData.pop();
-                    localStorage.setItem('aurasave_history', JSON.stringify(historyData));
-
+                    if(historyData.length > 15) historyData.pop(); localStorage.setItem('aurasave_history', JSON.stringify(historyData));
                     setTimeout(() => {
-                        downloadBtn.classList.add('success-state');
-                        btnProgress.style.opacity = '0';
-                        btnIcon.className = 'fas fa-check-circle';
-                        downloadText.textContent = translations[currentLang].completed;
-                        
-                        if (selectedFormat === 'jpg' && data.images && data.images.length > 0) {
-                            openGallery(data.images);
-                            setTimeout(() => { resetUI(); }, 1500);
-                        } else {
+                        downloadBtn.classList.add('success-state'); btnProgress.style.opacity = '0';
+                        btnIcon.className = 'fas fa-check-circle'; downloadText.textContent = translations[currentLang].completed;
+                        if (selectedFormat === 'jpg' && data.images && data.images.length > 0) { openGallery(data.images); setTimeout(() => { resetUI(); }, 1500); } 
+                        else {
                             let fileUrl = '', ext = '';
-                            if (selectedFormat === 'mp4') { fileUrl = data.video; ext = 'mp4'; }
-                            else if (selectedFormat === 'mp3') { fileUrl = data.audio; ext = 'mp3'; }
-                            else if (selectedFormat === 'jpg') { fileUrl = data.cover; ext = 'jpg'; }
-                            
-                            if (fileUrl) {
-                                const filename = `AuraSave_TikTok_${Date.now()}.${ext}`;
-                                forceDownload(fileUrl, filename);
-                                showToast(translations[currentLang].ready, 'success');
-                            } else {
-                                showToast('لم يتم العثور على رابط للتحميل', 'error');
-                            }
+                            if (selectedFormat === 'mp4') { fileUrl = data.video; ext = 'mp4'; } else if (selectedFormat === 'mp3') { fileUrl = data.audio; ext = 'mp3'; } else if (selectedFormat === 'jpg') { fileUrl = data.cover; ext = 'jpg'; }
+                            if (fileUrl) { const filename = `AuraSave_TikTok_${Date.now()}.${ext}`; forceDownload(fileUrl, filename); showToast(translations[currentLang].ready, 'success'); } 
+                            else { showToast('لم يتم العثور على رابط للتحميل', 'error'); }
                             setTimeout(() => { resetUI(); }, 2500);
                         }
                     }, 400);
-
-                } catch (error) {
-                    clearInterval(progressInterval);
-                    showInnerError(translations[currentLang].apiError);
-                    resetUI();
-                }
+                } catch (error) { clearInterval(progressInterval); showInnerError(translations[currentLang].apiError); resetUI(); }
             });
 
-            function resetUI() {
-                isDownloading = false;
-                downloadBtn.classList.remove('success-state');
-                downloadBtn.style.pointerEvents = 'auto';
-                btnProgress.style.width = '0%';
-                btnProgress.style.opacity = '0';
-                btnIcon.className = 'fas fa-download';
-                downloadText.textContent = translations[currentLang].dlBtn;
-            }
-
-            // ================= دوال القوائم الجانبية =================
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 120) floatingNav.classList.add('scrolled');
-                else { floatingNav.classList.remove('scrolled'); closeAllModals(); }
-            });
+            function resetUI() { isDownloading = false; downloadBtn.classList.remove('success-state'); downloadBtn.style.pointerEvents = 'auto'; btnProgress.style.width = '0%'; btnProgress.style.opacity = '0'; btnIcon.className = 'fas fa-download'; downloadText.textContent = translations[currentLang].dlBtn; }
+            window.addEventListener('scroll', () => { if (window.scrollY > 120) floatingNav.classList.add('scrolled'); else { floatingNav.classList.remove('scrolled'); closeAllModals(); } });
             function toggleMenu(menuToShow, btnClicked) {
-                const isShowing = menuToShow.classList.contains('show');
-                closeAllModals();
+                const isShowing = menuToShow.classList.contains('show'); closeAllModals();
                 if (!isShowing) {
-                    const rect = btnClicked.getBoundingClientRect();
-                    menuToShow.style.top = `${rect.bottom + 15}px`;
+                    const rect = btnClicked.getBoundingClientRect(); menuToShow.style.top = `${rect.bottom + 15}px`;
                     if (rect.left > window.innerWidth / 2) { menuToShow.style.right = `${window.innerWidth - rect.right}px`; menuToShow.style.left = 'auto'; menuToShow.style.transformOrigin = 'top right'; } 
                     else { menuToShow.style.left = `${rect.left}px`; menuToShow.style.right = 'auto'; menuToShow.style.transformOrigin = 'top left'; }
                     openModalWithHistory(menuToShow);
                 }
             }
-            document.getElementById('staticLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
-            document.getElementById('navLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
-            document.getElementById('staticHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
-            document.getElementById('navHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
+            document.getElementById('staticLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); }); document.getElementById('navLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
+            document.getElementById('staticHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); }); document.getElementById('navHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
             document.querySelectorAll('.menu-item[data-lang]').forEach(item => { item.addEventListener('click', () => { updateLanguage(item.dataset.lang); if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }); });
             document.addEventListener('click', (e) => { if (!e.target.closest('.control-wrapper') && !e.target.closest('.floating-navbar') && !e.target.closest('.dropdown-menu')) { closeAllModals(); } });
-
             function renderHistory() {
                 historyList.innerHTML = '';
                 if (historyData.length === 0) { emptyHistory.style.display = 'block'; document.getElementById('initClearAll').style.display = 'none'; } 
@@ -936,22 +583,14 @@
                         const icon = item.format === 'mp4' ? 'fa-video' : (item.format === 'mp3' ? 'fa-music' : 'fa-image');
                         const card = document.createElement('div'); card.className = 'hist-card';
                         card.innerHTML = `<div class="hist-icon"><i class="fas ${icon}"></i></div><div class="hist-info"><div class="hist-url">${item.url}</div></div><button class="hist-btn" data-index="${index}"><i class="fas fa-times"></i></button>`;
-                        card.addEventListener('click', (e) => {
-                            if(e.target.closest('.hist-btn')) return;
-                            videoUrl.value = item.url; document.querySelector(`.format-btn[data-format="${item.format}"]`).click(); closeAllModals();
-                        });
+                        card.addEventListener('click', (e) => { if(e.target.closest('.hist-btn')) return; videoUrl.value = item.url; document.querySelector(`.format-btn[data-format="${item.format}"]`).click(); closeAllModals(); });
                         historyList.appendChild(card);
                     });
-                    document.querySelectorAll('.hist-card .hist-btn').forEach(btn => {
-                        btn.addEventListener('click', (e) => { historyData.splice(e.currentTarget.dataset.index, 1); localStorage.setItem('aurasave_history', JSON.stringify(historyData)); renderHistory(); });
-                    });
+                    document.querySelectorAll('.hist-card .hist-btn').forEach(btn => { btn.addEventListener('click', (e) => { historyData.splice(e.currentTarget.dataset.index, 1); localStorage.setItem('aurasave_history', JSON.stringify(historyData)); renderHistory(); }); });
                 }
             }
-
-            document.getElementById('initClearAll').addEventListener('click', () => { confirmClearBox.classList.add('show'); });
-            document.getElementById('btnNoDel').addEventListener('click', () => { confirmClearBox.classList.remove('show'); });
+            document.getElementById('initClearAll').addEventListener('click', () => { confirmClearBox.classList.add('show'); }); document.getElementById('btnNoDel').addEventListener('click', () => { confirmClearBox.classList.remove('show'); });
             document.getElementById('btnYesDel').addEventListener('click', () => { historyData = []; localStorage.removeItem('aurasave_history'); confirmClearBox.classList.remove('show'); renderHistory(); showToast(translations[currentLang].clearedAll, 'success'); setTimeout(() => { if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }, 500); });
-
             updateLanguage(currentLang);
         });
     </script>

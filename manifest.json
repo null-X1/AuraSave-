@@ -2,21 +2,24 @@
   "name": "AuraSave - TikTok Downloader",
   "short_name": "AuraSave",
   "description": "تحميل فيديوهات تيك توك بدون علامة مائية بسهولة.",
-  "start_url": "/?source=pwa",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
   "background_color": "#f0f8ff",
   "theme_color": "#38bdf8",
   "orientation": "portrait",
   "icons": [
     {
-      "src": "https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png",
+      "src": "/icon.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png",
+      "src": "/icon.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ],
   "share_target": {
