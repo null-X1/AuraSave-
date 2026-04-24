@@ -3,40 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-<meta name="google-site-verification" content="m-zFXJoX-Ygs_QUAxQmtst6pivR0txnhx1TA9rDghlQ" />
+    <meta name="google-site-verification" content="m-zFXJoX-Ygs_QUAxQmtst6pivR0txnhx1TA9rDghlQ" />
+    <meta name="theme-color" content="#f0f8ff" id="themeColorMeta">
     <title>AuraSave | تحميل فيديوهات تيك توك بدون علامة مائية</title>
     
     <meta name="description" content="AuraSave موقع مجاني لتحميل فيديوهات تيك توك بدون علامة مائية وبجودة عالية HD. يمكنك تحميل فيديو TikTok بصيغة MP4 أو الصوت MP3 بسهولة.">
     <meta name="keywords" content="تحميل فيديو تيك توك, تحميل فيديو تيك توك بدون علامة مائية, تحميل تيك توك mp4, تحميل صوت تيك توك mp3, TikTok video downloader, Download TikTok video without watermark">
     <meta name="author" content="AuraSave">
-<meta property="og:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
-<meta name="twitter:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
+    <meta property="og:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
+    <meta name="twitter:image" content="https://i.ibb.co/gMrVg4pf/49a25a33bc654c55b60f6bef4411d9a2.png">
 
     <link rel="canonical" href="https://aura-save.vercel.app/">
     
     <link rel="icon" href="https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png" type="image/png">
     <link rel="apple-touch-icon" href="https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png">
+    
+    <!-- PWA Manifest -->
+    <link rel="manifest" href="/manifest.json">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&display=swap">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
+    <!-- Schema Markup SEO -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "WebApplication",
+      "name": "AuraSave",
+      "url": "https://aura-save.vercel.app/",
+      "logo": "https://i.ibb.co/mCV0G0VR/Picsart-26-04-24-03-18-12-970.png",
+      "description": "موقع مجاني لتحميل فيديوهات تيك توك بدون علامة مائية وبجودة عالية HD.",
+      "applicationCategory": "MultimediaApplication",
+      "operatingSystem": "All"
+    }
+    </script>
+
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'El Messiri', sans-serif; -webkit-tap-highlight-color: transparent; }
 
         body {
             min-height: 100vh; display: flex; flex-direction: column; align-items: center;
-            background-color: #f0f8ff;
-            color: #fff; overflow-x: hidden;
+            background-color: #f0f8ff; color: #fff; overflow-x: hidden;
             transition: background-color 0.8s ease;
         }
 
         /* ==================== الخلفية السائلة المتحركة ==================== */
         .fluid-bg-container {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-            z-index: -3; overflow: hidden;
-            background: #000;
+            z-index: -3; overflow: hidden; background: #000;
         }
         
         .fluid-image {
@@ -58,24 +74,24 @@
         .blob-2 { width: 50vw; height: 50vw; background: #e879f9; bottom: -10%; right: -10%; animation-delay: -5s; }
         .blob-3 { width: 70vw; height: 70vw; background: #fde047; top: 20%; left: 30%; animation-delay: -10s; opacity: 0.5; }
 
+        @media (prefers-reduced-motion: reduce) {
+            .fluid-image, .color-blob { animation: none; }
+        }
+
         @keyframes panImage { 0% { transform: scale(1) translate(0, 0); } 100% { transform: scale(1.1) translate(-2%, -2%); } }
         @keyframes floatBlob { 0% { transform: translate(0, 0) scale(1); } 33% { transform: translate(15vw, 10vh) scale(1.2); } 66% { transform: translate(-10vw, 15vh) scale(0.9); } 100% { transform: translate(5vw, -10vh) scale(1.1); } }
 
-        /* تعتيم الخلفية */
         .bg-blur-overlay {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
-            background: rgba(0, 0, 0, 0.15); 
-            z-index: -1; transition: background 1s ease;
+            background: rgba(0, 0, 0, 0.15); z-index: -1; transition: background 1s ease;
         }
 
         .main-wrapper {
             position: relative; z-index: 10; width: 100%; max-width: 900px;
-            padding: 150px 15px 100px; 
-            display: flex; flex-direction: column; align-items: center;
+            padding: 150px 15px 100px; display: flex; flex-direction: column; align-items: center;
         }
 
-        /* ================= أنيميشن وميض النيون ================= */
         @keyframes neonFlicker {
             0%   { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
             2%   { opacity: 0; filter: none; }
@@ -85,7 +101,6 @@
             100% { opacity: 1; filter: drop-shadow(0 0 10px rgba(56, 189, 248, 0.8)) drop-shadow(0 0 20px rgba(236, 72, 153, 0.6)); }
         }
 
-        /* ================= البار العائم ================= */
         .floating-navbar {
             position: fixed; top: -100px; left: 50%; transform: translateX(-50%);
             width: 90%; max-width: 600px; height: 80px;
@@ -105,7 +120,6 @@
         }
         .nav-btn:hover { background: #fff; color: #38bdf8; transform: scale(1.1); box-shadow: 0 5px 15px rgba(56, 189, 248, 0.2); }
 
-        /* ================= الشريط العلوي الثابت ================= */
         .top-static-controls { 
             position: absolute; top: 30px; width: 100%; max-width: 900px; 
             display: flex; justify-content: space-between; align-items: center; padding: 0 20px; z-index: 100; pointer-events: none; 
@@ -122,7 +136,6 @@
         }
         .static-btn:hover { background: rgba(255,255,255,0.8); color: #38bdf8; text-shadow: none; transform: scale(1.1); }
 
-        /* ================= زر الوضع الليلي ================= */
         .theme-toggle-btn {
             position: fixed; bottom: 25px; left: 25px; z-index: 999;
             width: 50px; height: 50px; border-radius: 50%;
@@ -137,9 +150,8 @@
         body.dark-mode .theme-toggle-btn .fa-moon { display: none; }
         body.dark-mode .theme-toggle-btn .fa-sun { display: block; }
 
-        /* ================= القوائم المنسدلة ================= */
         .dropdown-menu {
-            position: fixed; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
+            position: absolute; background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(35px); -webkit-backdrop-filter: blur(35px);
             border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; padding: 15px; 
             box-shadow: 0 20px 40px rgba(0,0,0,0.15), inset 0 1px 3px rgba(255,255,255,0.2); 
             opacity: 0; visibility: hidden; transform: translateY(-10px) scale(0.95); transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); 
@@ -151,7 +163,6 @@
         .menu-item:hover { background: rgba(255, 255, 255, 0.2); }
         .menu-item.active { background: rgba(56, 189, 248, 0.4); color: #38bdf8; text-shadow: 0 1px 2px rgba(0,0,0,0.5); }
 
-        /* السجل */
         .hist-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 0 5px 10px; border-bottom: 1px solid rgba(255,255,255,0.2); font-weight: bold; }
         .clear-all-btn { background: rgba(255,59,48,0.2); color: #ff3b30; border: 1px solid rgba(255,59,48,0.2); padding: 8px 12px; border-radius: 10px; cursor: pointer; transition: 0.2s; font-size: 0.95rem; font-weight: bold; display: flex; gap: 5px; align-items: center; text-shadow: none; }
         .clear-all-btn:hover { background: rgba(255,59,48,0.4); transform: scale(1.05); }
@@ -172,7 +183,6 @@
         .hist-btn:hover { background: rgba(255,59,48,0.4); transform: scale(1.1); }
         .empty-history { text-align: center; color: rgba(255,255,255,0.8); padding: 20px 0; font-size: 1rem; font-weight: bold; }
 
-        /* ================= الصندوق الزجاجي للتحميل ================= */
         .liquid-glass-panel {
             width: 100%; max-width: 480px; padding: 2rem 1.8rem; margin-bottom: 30px;
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.4) 0%, rgba(255, 255, 255, 0.15) 100%);
@@ -209,25 +219,17 @@
         .format-btn i { font-size: 1.5rem; } .format-btn span { font-size: 0.9rem; font-weight: 700; }
         .format-btn.active { border: 2px solid #38bdf8; background: rgba(255, 255, 255, 0.5); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2), inset 0 1px 5px rgba(255, 255, 255, 0.5); transform: translateY(-4px); color: #0284c7; }
 
-        /* ================= زر التحميل الجديد (Glass Neon) ================= */
         .gel-download-btn { 
-            width: 100%; height: 65px; 
-            background: rgba(56, 189, 248, 0.25);
-            border: 1px solid rgba(56, 189, 248, 0.5);
-            backdrop-filter: blur(10px);
-            border-radius: 35px; 
-            color: #fff; font-size: 1.2rem; font-weight: 700; 
-            text-shadow: 0 1px 3px rgba(0,0,0,0.5); 
-            display: flex; align-items: center; justify-content: center; 
-            position: relative; overflow: hidden; 
-            box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2), inset 0 2px 5px rgba(255,255,255,0.3); 
+            width: 100%; height: 65px; background: rgba(56, 189, 248, 0.25); border: 1px solid rgba(56, 189, 248, 0.5);
+            backdrop-filter: blur(10px); border-radius: 35px; color: #fff; font-size: 1.2rem; font-weight: 700; 
+            text-shadow: 0 1px 3px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; 
+            position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2), inset 0 2px 5px rgba(255,255,255,0.3); 
             cursor: pointer; transition: all 0.3s; 
         }
         .gel-download-btn:hover { 
-            background: rgba(56, 189, 248, 0.4);
+            background: rgba(56, 189, 248, 0.4); border-color: rgba(56, 189, 248, 0.8);
             box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.6), inset 0 2px 5px rgba(255,255,255,0.5); 
             transform: translateY(-3px); 
-            border-color: rgba(56, 189, 248, 0.8);
         }
         
         .btn-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: rgba(56, 189, 248, 0.6); z-index: 1; transition: width 0.2s linear; opacity: 0; }
@@ -242,7 +244,6 @@
         .error-inner-box { margin-top: 0; max-height: 0; opacity: 0; background: rgba(255, 59, 48, 0.3); border: 1px solid rgba(255, 59, 48, 0.4); color: #fff; font-size: 0.95rem; font-weight: 600; text-align: center; border-radius: 16px; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .error-inner-box.show { margin-top: 15px; max-height: 80px; padding: 12px; opacity: 1; }
 
-        /* ================= المحتوى السفلي ================= */
         .features-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
         .feature-box, .seo-box {
             background: rgba(255, 255, 255, 0.25); backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
@@ -264,7 +265,6 @@
         .seo-box[open] summary::after { transform: rotate(180deg); }
         .seo-content { padding-top: 15px; margin-top: 15px; border-top: 1px solid rgba(255,255,255,0.2); line-height: 1.7; font-size: 1rem; font-weight: 500; transition: all 0.5s ease; }
 
-        /* ================= الإشعارات الجانبية ================= */
         .toast-container { position: fixed; top: 90px; z-index: 9999; display: flex; flex-direction: column; gap: 10px; pointer-events: none; }
         html[dir="rtl"] .toast-container { left: 20px; } html[dir="ltr"] .toast-container { right: 20px; }
         .toast { 
@@ -286,7 +286,6 @@
         @keyframes shake { 0%, 100% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } }
         @keyframes popIn { 0% { transform: scale(0.9); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        /* ================= Modal عرض الصور ================= */
         .gallery-modal {
             position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
             background: rgba(0,0,0,0.7); backdrop-filter: blur(15px); -webkit-backdrop-filter: blur(15px);
@@ -299,8 +298,7 @@
             border: 1px solid rgba(255,255,255,0.2); border-radius: 24px;
             width: 90%; max-width: 800px; max-height: 90vh;
             padding: 20px; display: flex; flex-direction: column; gap: 15px;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.3);
-            color: #fff;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.3), inset 0 1px 3px rgba(255,255,255,0.3); color: #fff;
         }
         .gallery-header { display: flex; justify-content: space-between; align-items: center; }
         .gallery-header h3 { margin: 0; font-size: 1.3rem; text-shadow: 0 1px 3px rgba(0,0,0,0.5); }
@@ -357,35 +355,25 @@
         body.dark-mode .toast,
         body.dark-mode .theme-toggle-btn,
         body.dark-mode .gallery-content {
-            background: rgba(20, 20, 25, 0.4); 
-            backdrop-filter: blur(45px) saturate(120%); 
-            -webkit-backdrop-filter: blur(45px) saturate(120%);
-            border-color: rgba(255, 255, 255, 0.05); 
-            box-shadow: 0 15px 35px rgba(0,0,0,0.3); 
-            color: #f1f5f9; text-shadow: none;
+            background: rgba(20, 20, 25, 0.4); backdrop-filter: blur(45px) saturate(120%); 
+            -webkit-backdrop-filter: blur(45px) saturate(120%); border-color: rgba(255, 255, 255, 0.05); 
+            box-shadow: 0 15px 35px rgba(0,0,0,0.3); color: #f1f5f9; text-shadow: none;
         }
 
-        body.dark-mode .nav-btn, body.dark-mode .static-btn {
-            background: rgba(30, 30, 40, 0.5); border-color: rgba(255, 255, 255, 0.1); color: #e2e8f0; text-shadow: none; box-shadow: none;
-        }
+        body.dark-mode .nav-btn, body.dark-mode .static-btn { background: rgba(30, 30, 40, 0.5); border-color: rgba(255, 255, 255, 0.1); color: #e2e8f0; text-shadow: none; box-shadow: none; }
         body.dark-mode .nav-btn:hover, body.dark-mode .static-btn:hover { background: rgba(56, 189, 248, 0.15); color: #38bdf8; border-color: rgba(56, 189, 248, 0.3); }
-
         body.dark-mode .glass-input { background: rgba(0, 0, 0, 0.2); border-color: rgba(255, 255, 255, 0.08); text-shadow: none; }
         body.dark-mode .glass-input:focus { border-color: #38bdf8; background: rgba(0, 0, 0, 0.4); box-shadow: 0 0 15px rgba(56, 189, 248, 0.2); }
-
         body.dark-mode .format-btn { background: rgba(255, 255, 255, 0.03); border-color: rgba(255, 255, 255, 0.08); box-shadow: none; color: #94a3b8; }
         body.dark-mode .format-btn.active { background: rgba(56, 189, 248, 0.15); border-color: rgba(56, 189, 248, 0.4); color: #38bdf8; box-shadow: 0 5px 15px rgba(56, 189, 248, 0.15); }
-
         body.dark-mode .menu-item { color: #cbd5e1; }
         body.dark-mode .menu-item:hover { background: rgba(255,255,255,0.08); }
         body.dark-mode .menu-item.active { background: rgba(56, 189, 248, 0.15); color: #38bdf8; }
-        
         body.dark-mode .hist-header, body.dark-mode .seo-content { border-color: rgba(255,255,255,0.08); }
         body.dark-mode .hist-card { background: rgba(0,0,0,0.2); border-color: rgba(255,255,255,0.05); }
         body.dark-mode .hist-card:hover { background: rgba(30, 30, 40, 0.6); border-color: #38bdf8; }
         body.dark-mode .gallery-btn { background: rgba(255,255,255,0.05); border-color: rgba(255,255,255,0.1); }
         body.dark-mode .gallery-btn:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.3); }
-        
         body.dark-mode .droplet { background: rgba(255, 255, 255, 0.02); border-color: rgba(255, 255, 255, 0.05); box-shadow: inset -2px -2px 4px rgba(0,0,0,0.2), inset 2px 2px 4px rgba(255,255,255,0.05); }
     </style>
 </head>
@@ -514,6 +502,17 @@
     </div>
 
     <script>
+        // تسجيل الـ Service Worker (PWA)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/sw.js').then(registration => {
+                    console.log('SW registered: ', registration.scope);
+                }).catch(err => {
+                    console.log('SW registration failed: ', err);
+                });
+            });
+        }
+
         document.addEventListener('DOMContentLoaded', () => {
             const formatBtns = document.querySelectorAll('.format-btn');
             const downloadBtn = document.getElementById('downloadBtn');
@@ -534,6 +533,7 @@
             const toastContainer = document.getElementById('toastContainer');
             const floatingNav = document.getElementById('floatingNav');
             const themeToggleBtn = document.getElementById('themeToggleBtn');
+            const themeColorMeta = document.getElementById('themeColorMeta');
 
             // عناصر الـ Gallery
             const galleryModal = document.getElementById('galleryModal');
@@ -547,9 +547,24 @@
             let historyData = JSON.parse(localStorage.getItem('aurasave_history')) || [];
             let isDownloading = false;
 
+            // ================= معالجة المشاركة المباشرة (Share Target API) =================
+            const urlParams = new URLSearchParams(window.location.search);
+            const sharedUrl = urlParams.get('url') || urlParams.get('text');
+            if (sharedUrl) {
+                const extractedUrl = sharedUrl.match(/https?:\/\/[^\s]+/);
+                if (extractedUrl) {
+                    videoUrl.value = extractedUrl[0];
+                    window.history.replaceState({}, document.title, "/"); // تنظيف الرابط
+                    setTimeout(() => showToast(translations[currentLang].pasted, 'success'), 500);
+                }
+            }
+
             // ================= نظام الوضع الليلي =================
             const systemThemeQuery = window.matchMedia('(prefers-color-scheme: dark)');
-            function applyTheme(isDark) { document.body.classList.toggle('dark-mode', isDark); }
+            function applyTheme(isDark) { 
+                document.body.classList.toggle('dark-mode', isDark); 
+                themeColorMeta.content = isDark ? '#0a0a0f' : '#f0f8ff';
+            }
             function initTheme() {
                 const savedTheme = localStorage.getItem('aurasave_theme');
                 if (savedTheme) applyTheme(savedTheme === 'dark');
@@ -562,13 +577,15 @@
             themeToggleBtn.addEventListener('click', () => {
                 const isDark = document.body.classList.toggle('dark-mode');
                 localStorage.setItem('aurasave_theme', isDark ? 'dark' : 'light');
+                themeColorMeta.content = isDark ? '#0a0a0f' : '#f0f8ff';
             });
 
-            // ================= الترجمة =================
+            // ================= الترجمة مع إضافة حالات التحميل المتعددة =================
             const translations = {
                 ar: {
-                    placeholder: "أدخل رابط الفيديو هنا...", dlBtn: "تحميل الآن", processing: "جاري المعالجة...",
-                    completed: "اكتمل التحميل!", emptyHist: "لا توجد سجلات حالياً", pasted: "تم اللصق من الحافظة",
+                    placeholder: "أدخل رابط الفيديو هنا...", dlBtn: "تحميل الآن", 
+                    loadStep1: "جاري جلب الرابط...", loadStep2: "جاري تجهيز الملف...", loadStep3: "بدء التحميل...",
+                    completed: "اكتمل التحميل!", emptyHist: "لا توجد سجلات حالياً", pasted: "تم اللصق من الحافظة أو المشاركة",
                     emptyClip: "الحافظة فارغة", invalidUrl: "الرابط غير صحيح، يرجى التأكد منه!", cleared: "تم تفريغ الحقل",
                     ready: "تم تجهيز الملف!", apiError: "حدث خطأ أثناء جلب الفيديو. حاول مرة أخرى.",
                     fmtMp4: "MP4", fmtMp3: "MP3", fmtJpg: "صور", histTitle: "سجل التحميلات", delWarning: "مسح الكل؟",
@@ -581,7 +598,8 @@
                     seo3Title: "هل الأداة آمنة؟", seo3Content: "نعم! مجانية ولا نطلب تسجيل."
                 },
                 en: {
-                    placeholder: "Enter video link here...", dlBtn: "Download Now", processing: "Processing...",
+                    placeholder: "Enter video link here...", dlBtn: "Download Now", 
+                    loadStep1: "Fetching link...", loadStep2: "Preparing file...", loadStep3: "Starting download...",
                     completed: "Completed!", emptyHist: "No history yet", pasted: "Pasted from clipboard",
                     emptyClip: "Clipboard is empty", invalidUrl: "Invalid URL!", cleared: "Field cleared",
                     ready: "File ready!", apiError: "Error fetching video. Try again.",
@@ -595,7 +613,8 @@
                     seo3Title: "Is it safe?", seo3Content: "Yes! 100% free, no registration."
                 },
                 fr: {
-                    placeholder: "Entrez le lien...", dlBtn: "Télécharger", processing: "Traitement...",
+                    placeholder: "Entrez le lien...", dlBtn: "Télécharger", 
+                    loadStep1: "Récupération...", loadStep2: "Préparation...", loadStep3: "Téléchargement...",
                     completed: "Terminé!", emptyHist: "Aucun historique", pasted: "Collé",
                     emptyClip: "Presse-papiers vide", invalidUrl: "URL invalide!", cleared: "Effacé",
                     ready: "Fichier prêt!", apiError: "Erreur. Réessayez.",
@@ -617,7 +636,7 @@
                 document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
                 
                 videoUrl.placeholder = translations[lang].placeholder;
-                downloadText.textContent = translations[lang].dlBtn;
+                if(!isDownloading) downloadText.textContent = translations[lang].dlBtn;
                 document.querySelectorAll('[data-tr]').forEach(el => {
                     const key = el.getAttribute('data-tr');
                     if(translations[lang][key]) el.innerHTML = translations[lang][key];
@@ -634,12 +653,15 @@
                 updateDlSelectedBtn();
             }
 
-            // ================= دوال التحميل المباشر =================
-            // هذه الدالة تجبر المتصفح على تحميل الملف المباشر دون فتح نافذة جديدة
+            // ================= دوال التحميل المباشر مع Proxy وبدون Fallback =================
+            // سيتم استخدام الـ Proxy في الباك إند لتمرير الملف وتجنب الـ CORS
             async function forceDownload(url, filename) {
                 try {
-                    const response = await fetch(url);
-                    if (!response.ok) throw new Error("CORS or Network issue");
+                    // نمرر رابط الفيديو عبر الباك إند الخاص بنا
+                    const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
+                    const response = await fetch(proxyUrl);
+                    if (!response.ok) throw new Error("Proxy Network issue");
+                    
                     const blob = await response.blob();
                     const blobUrl = URL.createObjectURL(blob);
                     
@@ -652,15 +674,32 @@
                     
                     setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
                 } catch (e) {
-                    // Fallback: إذا قام السيرفر بحظر الطلب المباشر، سيتم فتحه في مسار جديد للتحميل الكلاسيكي
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.target = '_blank';
-                    a.download = filename;
-                    document.body.appendChild(a);
-                    a.click();
-                    document.body.removeChild(a);
+                    showInnerError("فشل التحميل المباشر بسبب قيود الخادم، يرجى المحاولة لاحقاً.");
+                    console.error("Download Error:", e);
                 }
+            }
+
+            // ================= تحسين إغلاق النوافذ (Modals & Dropdowns) =================
+            function closeAllModals() {
+                galleryModal.classList.remove('show');
+                langMenu.classList.remove('show');
+                historyMenu.classList.remove('show');
+                confirmClearBox.classList.remove('show');
+            }
+
+            // الإغلاق باستخدام زر Escape
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'Escape') closeAllModals();
+            });
+
+            // الإغلاق باستخدام زر الرجوع (Back) في الهواتف
+            window.addEventListener('popstate', (e) => {
+                closeAllModals();
+            });
+
+            function openModalWithHistory(modalElement) {
+                history.pushState({ modalOpen: true }, '');
+                modalElement.classList.add('show');
             }
 
             // ================= دوال الـ Gallery =================
@@ -677,10 +716,7 @@
                 images.forEach((imgUrl, idx) => {
                     const item = document.createElement('div');
                     item.className = 'gallery-item';
-                    item.innerHTML = `
-                        <img src="${imgUrl}" alt="TikTok Image" loading="lazy">
-                        <div class="check-icon"><i class="fas fa-check"></i></div>
-                    `;
+                    item.innerHTML = `<img src="${imgUrl}" alt="TikTok Image" loading="lazy"><div class="check-icon"><i class="fas fa-check"></i></div>`;
                     item.addEventListener('click', () => {
                         if (selectedImages.has(imgUrl)) {
                             selectedImages.delete(imgUrl);
@@ -694,10 +730,14 @@
                     galleryGrid.appendChild(item);
                 });
                 updateDlSelectedBtn();
-                galleryModal.classList.add('show');
+                openModalWithHistory(galleryModal);
             }
 
-            document.getElementById('closeGallery').addEventListener('click', () => galleryModal.classList.remove('show'));
+            document.getElementById('closeGallery').addEventListener('click', () => {
+                if (history.state && history.state.modalOpen) history.back();
+                else closeAllModals();
+            });
+            
             document.getElementById('selectAllBtn').addEventListener('click', () => {
                 selectedImages = new Set(currentGalleryImages);
                 document.querySelectorAll('.gallery-item').forEach(item => item.classList.add('selected'));
@@ -711,9 +751,7 @@
 
             dlSelectedBtn.addEventListener('click', async () => {
                 if (selectedImages.size === 0) return;
-                
-                const originalText = document.querySelector('#downloadSelectedBtn span').textContent;
-                document.querySelector('#downloadSelectedBtn span').textContent = translations[currentLang].processing;
+                document.querySelector('#downloadSelectedBtn span').textContent = translations[currentLang].loadStep2;
                 dlSelectedBtn.style.pointerEvents = 'none';
 
                 let counter = 1;
@@ -726,7 +764,9 @@
                 await Promise.allSettled(downloadPromises);
                 
                 dlSelectedBtn.style.pointerEvents = 'auto';
-                galleryModal.classList.remove('show');
+                if (history.state && history.state.modalOpen) history.back();
+                else closeAllModals();
+                
                 showToast(translations[currentLang].completed, 'success');
                 updateDlSelectedBtn();
             });
@@ -786,34 +826,37 @@
                 downloadBtn.style.pointerEvents = 'none';
                 btnProgress.style.opacity = '1';
                 btnIcon.className = 'fas fa-circle-notch fa-spin';
-                downloadText.textContent = translations[currentLang].processing;
+                downloadText.textContent = translations[currentLang].loadStep1; // حالة التحميل 1
                 
                 let progress = 0;
+                let step = 1;
                 const progressInterval = setInterval(() => {
                     progress += Math.random() * 10;
                     if(progress > 85) progress = 85;
                     btnProgress.style.width = `${progress}%`;
-                }, 300);
+                    
+                    // تغيير نص حالة التحميل ديناميكياً
+                    if(progress > 30 && step === 1) { step = 2; downloadText.textContent = translations[currentLang].loadStep2; }
+                    if(progress > 60 && step === 2) { step = 3; downloadText.textContent = translations[currentLang].loadStep3; }
+                }, 400);
 
                 try {
-    const encodedUrl = btoa(encodeURIComponent(url));
-    const response = await fetch(`/api/download?data=${encodedUrl}`); 
+                    const encodedUrl = btoa(encodeURIComponent(url));
+                    const response = await fetch(`/api/download?data=${encodedUrl}`); 
 
-    if (!response.ok) throw new Error('API request failed');
+                    if (!response.ok) throw new Error('API request failed');
                     const data = await response.json();
                     if (!data.success) throw new Error('Invalid response data');
                     
                     clearInterval(progressInterval);
                     btnProgress.style.width = '100%';
 
-                    // ================= 3. معالجة خطأ اختيار فيديو لرابط صور =================
                     if (selectedFormat === 'mp4' && (!data.video || data.video === "") && data.images && data.images.length > 0) {
                         showInnerError(translations[currentLang].notVideo);
                         resetUI();
                         return;
                     }
 
-                    // الحفظ في السجل
                     historyData.unshift({ url, format: selectedFormat });
                     if(historyData.length > 15) historyData.pop();
                     localStorage.setItem('aurasave_history', JSON.stringify(historyData));
@@ -824,7 +867,6 @@
                         btnIcon.className = 'fas fa-check-circle';
                         downloadText.textContent = translations[currentLang].completed;
                         
-                        // ================= 4. تشغيل التحميل المباشر أو عرض الصور =================
                         if (selectedFormat === 'jpg' && data.images && data.images.length > 0) {
                             openGallery(data.images);
                             setTimeout(() => { resetUI(); }, 1500);
@@ -843,7 +885,6 @@
                             }
                             setTimeout(() => { resetUI(); }, 2500);
                         }
-
                     }, 400);
 
                 } catch (error) {
@@ -863,30 +904,29 @@
                 downloadText.textContent = translations[currentLang].dlBtn;
             }
 
-            // ================= دوال القوائم الجانبية (لم تتغير وظيفتها) =================
+            // ================= دوال القوائم الجانبية =================
             window.addEventListener('scroll', () => {
                 if (window.scrollY > 120) floatingNav.classList.add('scrolled');
-                else { floatingNav.classList.remove('scrolled'); langMenu.classList.remove('show'); historyMenu.classList.remove('show'); }
+                else { floatingNav.classList.remove('scrolled'); closeAllModals(); }
             });
             function toggleMenu(menuToShow, btnClicked) {
                 const isShowing = menuToShow.classList.contains('show');
-                langMenu.classList.remove('show'); historyMenu.classList.remove('show'); confirmClearBox.classList.remove('show');
+                closeAllModals();
                 if (!isShowing) {
                     const rect = btnClicked.getBoundingClientRect();
                     menuToShow.style.top = `${rect.bottom + 15}px`;
                     if (rect.left > window.innerWidth / 2) { menuToShow.style.right = `${window.innerWidth - rect.right}px`; menuToShow.style.left = 'auto'; menuToShow.style.transformOrigin = 'top right'; } 
                     else { menuToShow.style.left = `${rect.left}px`; menuToShow.style.right = 'auto'; menuToShow.style.transformOrigin = 'top left'; }
-                    menuToShow.classList.add('show');
+                    openModalWithHistory(menuToShow);
                 }
             }
             document.getElementById('staticLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
             document.getElementById('navLangBtn').addEventListener('click', (e) => { e.stopPropagation(); toggleMenu(langMenu, e.currentTarget); });
             document.getElementById('staticHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
             document.getElementById('navHistoryBtn').addEventListener('click', (e) => { e.stopPropagation(); renderHistory(); toggleMenu(historyMenu, e.currentTarget); });
-            document.querySelectorAll('.menu-item[data-lang]').forEach(item => { item.addEventListener('click', () => { updateLanguage(item.dataset.lang); langMenu.classList.remove('show'); }); });
-            document.addEventListener('click', (e) => { if (!e.target.closest('.control-wrapper') && !e.target.closest('.floating-navbar') && !e.target.closest('.dropdown-menu')) { langMenu.classList.remove('show'); historyMenu.classList.remove('show'); confirmClearBox.classList.remove('show'); } });
+            document.querySelectorAll('.menu-item[data-lang]').forEach(item => { item.addEventListener('click', () => { updateLanguage(item.dataset.lang); if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }); });
+            document.addEventListener('click', (e) => { if (!e.target.closest('.control-wrapper') && !e.target.closest('.floating-navbar') && !e.target.closest('.dropdown-menu')) { closeAllModals(); } });
 
-            // ================= عرض السجل =================
             function renderHistory() {
                 historyList.innerHTML = '';
                 if (historyData.length === 0) { emptyHistory.style.display = 'block'; document.getElementById('initClearAll').style.display = 'none'; } 
@@ -898,7 +938,7 @@
                         card.innerHTML = `<div class="hist-icon"><i class="fas ${icon}"></i></div><div class="hist-info"><div class="hist-url">${item.url}</div></div><button class="hist-btn" data-index="${index}"><i class="fas fa-times"></i></button>`;
                         card.addEventListener('click', (e) => {
                             if(e.target.closest('.hist-btn')) return;
-                            videoUrl.value = item.url; document.querySelector(`.format-btn[data-format="${item.format}"]`).click(); historyMenu.classList.remove('show');
+                            videoUrl.value = item.url; document.querySelector(`.format-btn[data-format="${item.format}"]`).click(); closeAllModals();
                         });
                         historyList.appendChild(card);
                     });
@@ -910,7 +950,7 @@
 
             document.getElementById('initClearAll').addEventListener('click', () => { confirmClearBox.classList.add('show'); });
             document.getElementById('btnNoDel').addEventListener('click', () => { confirmClearBox.classList.remove('show'); });
-            document.getElementById('btnYesDel').addEventListener('click', () => { historyData = []; localStorage.removeItem('aurasave_history'); confirmClearBox.classList.remove('show'); renderHistory(); showToast(translations[currentLang].clearedAll, 'success'); setTimeout(() => historyMenu.classList.remove('show'), 500); });
+            document.getElementById('btnYesDel').addEventListener('click', () => { historyData = []; localStorage.removeItem('aurasave_history'); confirmClearBox.classList.remove('show'); renderHistory(); showToast(translations[currentLang].clearedAll, 'success'); setTimeout(() => { if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }, 500); });
 
             updateLanguage(currentLang);
         });
