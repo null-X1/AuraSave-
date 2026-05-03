@@ -1,13 +1,10 @@
 {
   "version": 2,
+
   "builds": [
     {
       "src": "api/download.js",
-      "use": "@vercel/node",
-      "config": {
-        "maxDuration": 15,
-        "memory": 1024
-      }
+      "use": "@vercel/node"
     },
     { "src": "index.html", "use": "@vercel/static" },
     { "src": "sw.js", "use": "@vercel/static" },
@@ -16,32 +13,15 @@
     { "src": "robots.txt", "use": "@vercel/static" },
     { "src": "icon.png", "use": "@vercel/static" }
   ],
-  "headers": [
+
+  "routes": [
     {
-      "source": "/api/(.*)",
-      "headers": [
-        {
-          "key": "Access-Control-Allow-Origin",
-          "value": "*"
-        },
-        {
-          "key": "Access-Control-Allow-Methods",
-          "value": "GET, POST, OPTIONS"
-        },
-        {
-          "key": "Access-Control-Allow-Headers",
-          "value": "Content-Type, X-Requested-With"
-        }
-      ]
+      "src": "/api/download",
+      "dest": "api/download.js"
     },
     {
-      "source": "/(sw\\.js|manifest\\.json|sitemap\\.xml)",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "no-cache, no-store, must-revalidate"
-        }
-      ]
+      "src": "/(.*)",
+      "dest": "/$1"
     }
   ]
 }
