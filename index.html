@@ -119,7 +119,22 @@
         .paste-btn:hover { background: rgba(56, 189, 248, 0.5); border-color: rgba(56,189,248,0.5); transform: translateY(-50%) scale(1.1); }
         .clear-btn { width: 55px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
         .clear-btn:hover { background: rgba(255, 59, 48, 0.3); border-color: rgba(255,59,48,0.4); color: #ff3b30; box-shadow: 0 0 15px rgba(255, 59, 48, 0.3); transform: scale(1.05); }
-        .formats-container { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2rem; }
+       
+
+.spinner {
+    width: 18px;
+    height: 18px;
+    border: 2px solid rgba(255,255,255,0.3);
+    border-top: 2px solid #fff;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+ .formats-container { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2rem; }
         .format-btn { flex: 1; height: 75px; background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #333; cursor: pointer; transition: all 0.3s; box-shadow: inset 0 1px 4px rgba(255,255,255,0.4); }
         .format-btn i { font-size: 1.5rem; } .format-btn span { font-size: 0.9rem; font-weight: 700; }
         .format-btn.active { border: 2px solid #38bdf8; background: rgba(255, 255, 255, 0.5); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2), inset 0 1px 5px rgba(255, 255, 255, 0.5); transform: translateY(-4px); color: #0284c7; }
@@ -273,12 +288,14 @@
             </div>
 
             <button class="gel-download-btn" id="downloadBtn">
-                <div class="btn-progress" id="btnProgress"></div>
-                <div class="btn-content-wrapper" id="btnContent">
-                    <i class="fas fa-download" id="btnIcon"></i>
-                    <span id="downloadText" data-tr="dlBtn">تحميل الآن</span>
-                </div>
-            </button>
+    <div class="btn-progress" id="btnProgress"></div>
+
+    <div class="btn-content-wrapper" id="btnContent">
+        <span id="downloadText">تحميل الآن</span>
+        <span id="progressText" style="display:none;">0%</span>
+    </div>
+</button>
+
             <div class="error-inner-box" id="innerErrorBox"></div>
         </div>
 
@@ -428,18 +445,23 @@
             async function forceDownload(url, filename) {
     try {
         const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
+        
+        // UI بداية
+        btnProgress.style.width = "0%";
+        btnProgress.style.opacity = "1";
+        downloadText.innerHTML = `<div class="spinner"></div>`;
+        
         const response = await fetch(proxyUrl);
-
         if (!response.ok) throw new Error("Network error");
 
+        const reader = response.body.getReader();
         const contentLength = response.headers.get('Content-Length');
         const total = parseInt(contentLength, 10);
 
-        const reader = response.body.getReader();
         let received = 0;
         const chunks = [];
 
-        btnProgress.style.opacity = "1";
+        document.getElementById("progressText").style.display = "block";
 
         while (true) {
             const { done, value } = await reader.read();
@@ -449,29 +471,36 @@
             received += value.length;
 
             if (total) {
-                const percent = (received / total) * 100;
+                const percent = Math.floor((received / total) * 100);
                 btnProgress.style.width = percent + "%";
+                progressText.innerText = percent + "%";
+            } else {
+                // fallback animation
+                btnProgress.style.width = "70%";
+                progressText.innerText = "جاري التحميل...";
             }
         }
 
+        // إنشاء الملف
         const blob = new Blob(chunks);
         const blobUrl = URL.createObjectURL(blob);
 
-        const a = document.createElement('a');
-        a.href = blobUrl;
-        a.download = filename;
-        document.body.appendChild(a);
-        a.click();
-        a.remove();
-
+        // Success Animation
+        downloadText.innerHTML = "✔ تم!";
         btnProgress.style.width = "100%";
 
+        setTimeout(() => {
+            const a = document.createElement('a');
+            a.href = blobUrl;
+            a.download = filename;
+            a.click();
+        }, 300);
+
     } catch (e) {
-        showInnerError("فشل التحميل");
+        downloadText.innerText = "فشل التحميل";
         console.error(e);
     }
 }
-
             function closeAllModals() {
                 galleryModal.classList.remove('show'); langMenu.classList.remove('show');
                 historyMenu.classList.remove('show'); confirmClearBox.classList.remove('show');
