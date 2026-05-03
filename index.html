@@ -119,30 +119,90 @@
         .paste-btn:hover { background: rgba(56, 189, 248, 0.5); border-color: rgba(56,189,248,0.5); transform: translateY(-50%) scale(1.1); }
         .clear-btn { width: 55px; background: rgba(0, 0, 0, 0.25); border: 1px solid rgba(255, 255, 255, 0.2); border-radius: 20px; color: #fff; display: flex; align-items: center; justify-content: center; font-size: 1.2rem; cursor: pointer; transition: 0.3s; }
         .clear-btn:hover { background: rgba(255, 59, 48, 0.3); border-color: rgba(255,59,48,0.4); color: #ff3b30; box-shadow: 0 0 15px rgba(255, 59, 48, 0.3); transform: scale(1.05); }
-       
-
-.spinner {
-    width: 18px;
-    height: 18px;
-    border: 2px solid rgba(255,255,255,0.3);
-    border-top: 2px solid #fff;
-    border-radius: 50%;
-    animation: spin 0.6s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
- .formats-container { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2rem; }
+        .formats-container { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2rem; }
         .format-btn { flex: 1; height: 75px; background: rgba(255, 255, 255, 0.3); border: 1px solid rgba(255, 255, 255, 0.3); border-radius: 20px; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; color: #333; cursor: pointer; transition: all 0.3s; box-shadow: inset 0 1px 4px rgba(255,255,255,0.4); }
         .format-btn i { font-size: 1.5rem; } .format-btn span { font-size: 0.9rem; font-weight: 700; }
         .format-btn.active { border: 2px solid #38bdf8; background: rgba(255, 255, 255, 0.5); box-shadow: 0 8px 25px rgba(56, 189, 248, 0.2), inset 0 1px 5px rgba(255, 255, 255, 0.5); transform: translateY(-4px); color: #0284c7; }
-        .gel-download-btn { width: 100%; height: 65px; background: rgba(56, 189, 248, 0.25); border: 1px solid rgba(56, 189, 248, 0.5); backdrop-filter: blur(10px); border-radius: 35px; color: #fff; font-size: 1.2rem; font-weight: 700; text-shadow: 0 1px 3px rgba(0,0,0,0.5); display: flex; align-items: center; justify-content: center; position: relative; overflow: hidden; box-shadow: 0 10px 25px rgba(56, 189, 248, 0.2), inset 0 2px 5px rgba(255,255,255,0.3); cursor: pointer; transition: all 0.3s; }
-        .gel-download-btn:hover { background: rgba(56, 189, 248, 0.4); border-color: rgba(56, 189, 248, 0.8); box-shadow: 0 15px 35px rgba(56, 189, 248, 0.4), 0 0 20px rgba(56, 189, 248, 0.6), inset 0 2px 5px rgba(255,255,255,0.5); transform: translateY(-3px); }
-        .btn-progress { position: absolute; top: 0; left: 0; height: 100%; width: 0%; background: rgba(56, 189, 248, 0.6); z-index: 1; transition: width 0.2s linear; opacity: 0; }
-        .btn-content-wrapper { z-index: 4; display: flex; align-items: center; gap: 10px; position: relative; transition: 0.3s; }
-        .gel-download-btn.success-state { background: rgba(52, 199, 89, 0.3); border-color: rgba(52, 199, 89, 0.6); box-shadow: 0 0 30px rgba(52, 199, 89, 0.5), inset 0 2px 5px rgba(255,255,255,0.3); animation: pulseSuccess 1s ease; }
+        .pro-download-btn {
+    position: relative;
+    width: 100%;
+    height: 65px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    overflow: hidden;
+    background: transparent;
+}
+
+/* الخلفية */
+.btn-bg {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, #38bdf8, #a855f7, #ec4899);
+    border-radius: 20px;
+    transition: 0.4s;
+}
+
+/* المحتوى */
+.btn-content {
+    position: relative;
+    z-index: 2;
+    color: #fff;
+    font-size: 1.2rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+}
+
+/* glow effect */
+.btn-glow {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.4), transparent 70%);
+    opacity: 0;
+    transition: 0.4s;
+}
+
+/* hover */
+.pro-download-btn:hover .btn-bg {
+    transform: scale(1.05);
+    filter: brightness(1.2);
+}
+
+.pro-download-btn:hover .btn-glow {
+    opacity: 1;
+}
+
+/* click */
+.pro-download-btn:active .btn-bg {
+    transform: scale(0.97);
+}
+
+/* loading state */
+.pro-download-btn.loading .btn-content {
+    opacity: 0.6;
+}
+
+.pro-download-btn.loading::after {
+    content: "";
+    position: absolute;
+    width: 22px;
+    height: 22px;
+    border: 2px solid #fff;
+    border-top: 2px solid transparent;
+    border-radius: 50%;
+    animation: spin 0.6s linear infinite;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+@keyframes spin {
+    to { transform: translate(-50%, -50%) rotate(360deg); }
+}
         .error-inner-box { margin-top: 0; max-height: 0; opacity: 0; background: rgba(255, 59, 48, 0.3); border: 1px solid rgba(255, 59, 48, 0.4); color: #fff; font-size: 0.95rem; font-weight: 600; text-align: center; border-radius: 16px; backdrop-filter: blur(10px); transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1); overflow: hidden; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .error-inner-box.show { margin-top: 15px; max-height: 80px; padding: 12px; opacity: 1; }
         .features-container { width: 100%; display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-bottom: 30px; }
@@ -287,13 +347,15 @@
                 <div class="format-btn" data-format="jpg"><i class="fas fa-images"></i><span data-tr="fmtJpg">صور</span></div>
             </div>
 
-            <button class="gel-download-btn" id="downloadBtn">
-    <div class="btn-progress" id="btnProgress"></div>
+            <button class="pro-download-btn" id="downloadBtn">
+    <span class="btn-bg"></span>
 
-    <div class="btn-content-wrapper" id="btnContent">
-        <span id="downloadText">تحميل الآن</span>
-        <span id="progressText" style="display:none;">0%</span>
-    </div>
+    <span class="btn-content">
+        <i class="fas fa-download"></i>
+        <span class="btn-text">تحميل الآن</span>
+    </span>
+
+    <span class="btn-glow"></span>
 </button>
 
             <div class="error-inner-box" id="innerErrorBox"></div>
@@ -445,23 +507,18 @@
             async function forceDownload(url, filename) {
     try {
         const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
-        
-        // UI بداية
-        btnProgress.style.width = "0%";
-        btnProgress.style.opacity = "1";
-        downloadText.innerHTML = `<div class="spinner"></div>`;
-        
         const response = await fetch(proxyUrl);
+
         if (!response.ok) throw new Error("Network error");
 
-        const reader = response.body.getReader();
         const contentLength = response.headers.get('Content-Length');
         const total = parseInt(contentLength, 10);
 
+        const reader = response.body.getReader();
         let received = 0;
         const chunks = [];
 
-        document.getElementById("progressText").style.display = "block";
+        btnProgress.style.opacity = "1";
 
         while (true) {
             const { done, value } = await reader.read();
@@ -471,36 +528,29 @@
             received += value.length;
 
             if (total) {
-                const percent = Math.floor((received / total) * 100);
+                const percent = (received / total) * 100;
                 btnProgress.style.width = percent + "%";
-                progressText.innerText = percent + "%";
-            } else {
-                // fallback animation
-                btnProgress.style.width = "70%";
-                progressText.innerText = "جاري التحميل...";
             }
         }
 
-        // إنشاء الملف
         const blob = new Blob(chunks);
         const blobUrl = URL.createObjectURL(blob);
 
-        // Success Animation
-        downloadText.innerHTML = "✔ تم!";
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
         btnProgress.style.width = "100%";
 
-        setTimeout(() => {
-            const a = document.createElement('a');
-            a.href = blobUrl;
-            a.download = filename;
-            a.click();
-        }, 300);
-
     } catch (e) {
-        downloadText.innerText = "فشل التحميل";
+        showInnerError("فشل التحميل");
         console.error(e);
     }
 }
+
             function closeAllModals() {
                 galleryModal.classList.remove('show'); langMenu.classList.remove('show');
                 historyMenu.classList.remove('show'); confirmClearBox.classList.remove('show');
@@ -663,6 +713,14 @@
             document.getElementById('btnYesDel').addEventListener('click', () => { historyData = []; localStorage.removeItem('aurasave_history'); confirmClearBox.classList.remove('show'); renderHistory(); showToast(translations[currentLang].clearedAll, 'success'); setTimeout(() => { if (history.state && history.state.modalOpen) history.back(); else closeAllModals(); }, 500); });
             updateLanguage(currentLang);
         });
+downloadBtn.addEventListener("click", () => {
+    downloadBtn.classList.add("loading");
+
+    // لما يخلص التحميل
+    setTimeout(() => {
+        downloadBtn.classList.remove("loading");
+    }, 3000);
+});
     </script>
 </body>
 </html>
