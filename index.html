@@ -426,20 +426,51 @@
             }
 
             async function forceDownload(url, filename) {
-                try {
-                    const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
-                    const response = await fetch(proxyUrl);
-                    if (!response.ok) throw new Error("Proxy Network issue");
-                    const blob = await response.blob();
-                    const blobUrl = URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = blobUrl; a.download = filename; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-                    setTimeout(() => URL.revokeObjectURL(blobUrl), 1000);
-                } catch (e) {
-                    showInnerError("فشل التحميل المباشر بسبب قيود الخادم، يرجى المحاولة لاحقاً.");
-                    console.error("Download Error:", e);
-                }
+    try {
+        const proxyUrl = `/api/download?action=proxy&proxyUrl=${encodeURIComponent(url)}`;
+        const response = await fetch(proxyUrl);
+
+        if (!response.ok) throw new Error("Network error");
+
+        const contentLength = response.headers.get('Content-Length');
+        const total = parseInt(contentLength, 10);
+
+        const reader = response.body.getReader();
+        let received = 0;
+        const chunks = [];
+
+        btnProgress.style.opacity = "1";
+
+        while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+
+            chunks.push(value);
+            received += value.length;
+
+            if (total) {
+                const percent = (received / total) * 100;
+                btnProgress.style.width = percent + "%";
             }
+        }
+
+        const blob = new Blob(chunks);
+        const blobUrl = URL.createObjectURL(blob);
+
+        const a = document.createElement('a');
+        a.href = blobUrl;
+        a.download = filename;
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+
+        btnProgress.style.width = "100%";
+
+    } catch (e) {
+        showInnerError("فشل التحميل");
+        console.error(e);
+    }
+}
 
             function closeAllModals() {
                 galleryModal.classList.remove('show'); langMenu.classList.remove('show');
